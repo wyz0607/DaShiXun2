@@ -18,7 +18,7 @@ namespace TravelMVC.Models
         public int User_Loc_Coun { get; set; }
         public string User_DocumentType { get; set; }
         public string User_IDNumber { get; set; }
-        public string Role { get; set; }
+        public string User_Role { get; set; }
      
     }
 }

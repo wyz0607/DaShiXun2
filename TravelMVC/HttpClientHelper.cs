@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace Restaurant_Information_MVC
+namespace TravelMVC.Controllers
 {
     public class HttpClientHelper
     {
