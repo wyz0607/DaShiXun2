@@ -159,6 +159,7 @@
     <Compile Include="HttpClientHelper.cs" />
     <Compile Include="Models\Airticket.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\HttpClientHelper.cs" />
     <Compile Include="Models\NewsList.cs" />
     <Compile Include="Models\Newstype.cs" />
     <Compile Include="Models\Order.cs" />
