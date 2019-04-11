@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
-namespace TravelMVC.Controllers
+namespace TravelMVC.Models
 {
     public class HttpClientHelper
     {
-        public static string Send(string methed,string apimethed,string JsonStr)
+        public static string Send(string methed, string apimethed, string JsonStr)
         {
             Uri uri = new Uri("http://localhost:61521/");
             HttpClient client = new HttpClient();
             client.BaseAddress = uri;
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage sponse = null;
-            switch(methed)
+            switch (methed)
             {
                 case "get":
                     sponse = client.GetAsync(apimethed).Result;
@@ -37,7 +34,7 @@ namespace TravelMVC.Controllers
                     break;
 
             }
-            if(sponse.IsSuccessStatusCode)
+            if (sponse.IsSuccessStatusCode)
             {
                 return sponse.Content.ReadAsStringAsync().Result;
             }
