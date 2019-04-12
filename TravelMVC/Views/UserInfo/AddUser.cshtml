@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form class="layui-form" action="/UserInfo/AddUser" enctype="multipart/form-data" method="post">
+    <table style="margin:20px auto" class="layui-table" lay-skin="line">
+        <tr>
+            <td style="width:150px;">用户名:</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="text" name="UserName" lay-verify="title" autocomplete="off" class="layui-input">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width:150px;">手机号:</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="text" name="UserPhone" lay-verify="title" autocomplete="off" class="layui-input">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;">密码:</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="password" name="UserPwd" lay-verify="title" autocomplete="off" class="layui-input">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;">性别:</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="radio" name="UserSex" value="男" title="男" checked="">
+                    <input type="radio" name="UserSex" value="女" title="女">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;">出生日期:</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="text" name="UserBirth" id="date1" autocomplete="off" class="layui-input">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;">地址</td>
+            <td>
+                <div class="layui-input-inline">
+                    <select id="Select1" name="User_Loc_Prov" lay-filter="test">
+                        <option value="">请选择</option>
+                        @foreach (SelectListItem item in ViewBag.s as IEnumerable<SelectListItem>)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="layui-input-inline layui-form" lay-filter="txt1">
+                        <select name="User_Loc_City" id="Select2" lay-filter="test1"></select>
+                </div>
+                <div class="layui-input-inline layui-form" lay-filter="txt2">
+                    <select name="User_Loc_Coun" id="Select3" lay-filter="tes2"></select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;">证件类型</td>
+            <td>
+                <div class="layui-input-inline">
+                    <select name="User_DocumentType" lay-filter="aihao">
+                        <option value=""></option>
+                        <option value="居民身份证">居民身份证</option>
+                        <option value="护照">护照</option>
+                        <option value="学生证">学生证</option>
+                        <option value="港澳通行证">港澳通行证</option>
+                        <option value="士官证">士官证</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;">证件号</td>
+            <td>
+                <div class="layui-input-block">
+                    <input type="text" name="User_IDNumber" lay-verify="title" placeholder="请输入证件号" class="layui-input" style="margin-left:-110px;">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button class="layui-btn" type="submit" lay-submit="" lay-filter="demo1" style="margin-left:146px;">立即提交</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+    //layui样式
+    layui.use(['form', 'laydate', 'jquery'], function () {
+        var form = layui.form,
+            laydate = layui.laydate,
+            $ = layui.jquery;
+        //出生日期
+        laydate.render({
+            elem: '#date1',
+            type: 'date',
+            theme:'#00FF00'
+        });
+        form.on("select(test)", function (data) {
+            var Id = data.value;
+            $("#Select1").val(Id);
+            $("#Select2").empty();
+            var str = '<option value="" >请选择</option>';
+            $("#Select2").append(str);
+            $.ajax({
+                url: "/UserInfo/BindSelect2?Id=" + Id,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    for (var i in data) {
+                        var str = '<option value=' + data[i].R_Id + '>' + data[i].R_Name + '</option>';
+                        $("#Select2").append(str);
+                    }
+                    form.render('select', 'txt1');
+                    
+                }
+            })
+        })
+        form.on("select(test1)", function (data) {
+            var id = data.value;
+            $("#Select2").val(id);
+        })
+        form.on("select(test1)", function (data) {
+            var Id = data.value;
+            $("#Select2").val(Id);
+            $("#Select3").empty();
+            var str = '<option value="" >请选择</option>';
+            $("#Select3").append(str);
+            $.ajax({
+                url: "/UserInfo/BindSelect2?Id=" + Id,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    for (var i in data) {
+                        var str = '<option value=' + data[i].R_Id + '>' + data[i].R_Name + '</option>';
+                        $("#Select3").append(str);
+                    }
+                    form.render('select', 'txt2');
+                }
+            })
+        })
+        form.on("select(test2)", function (data) {
+            var id = data.value;
+            $("#Select3").val(id);
+        })
+    });
+</script>
