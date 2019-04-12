@@ -7,9 +7,9 @@
     <meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
     <meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
     <meta name="author" content="yinqi">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="css/style.min.css" rel="stylesheet">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="~/css/style.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -26,24 +26,26 @@
 
                     <nav class="sidebar-main">
                         <ul class="nav nav-drawer">
-                            <li class="nav-item active"> <a href="index.html"><i class="mdi mdi-home"></i> 后台首页</a> </li>
+                            <li class="nav-item active"> <a href="index.html"><img src="~/Images/activeHome.png" style="width:25px;height:25px; margin-right:10px;" />  后台首页</a> </li>
                             <li class="nav-item nav-item-has-subnav">
-                                <a href="javascript:void(0)"><i class="mdi mdi-palette"></i>用户管理</a>
+                                <a href="javascript:void(0)"><img src="~/Images/yonghuguanli.png" style="width:25px;height:25px; margin-right:10px;" />用户管理</a>
                                 <ul class="nav nav-subnav">
                                     <li> <a href="lyear_ui_buttons.html">添加管理员</a> </li>
                                     <li> <a href="lyear_ui_buttons.html">管理员信息</a> </li>
                                     <li> <a href="lyear_ui_buttons.html">用户信息</a> </li>
                                 </ul>
                             </li>
+
                             <li class="nav-item nav-item-has-subnav">
-                                <a href="javascript:void(0)"><i class="mdi mdi-format-align-justify"></i>旅游资讯</a>
+                                <a href="javascript:void(0)"><img src="~/Images/zixun.png" style="width:25px;height:25px; margin-right:10px;" /> 旅游资讯</a>
                                 <ul class="nav nav-subnav">
                                     <li> <a href="lyear_forms_elements.html">发布资讯</a> </li>
                                     <li> <a href="lyear_forms_elements.html">管理资讯</a> </li>
                                 </ul>
                             </li>
+
                             <li class="nav-item nav-item-has-subnav">
-                                <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i>景点度假</a>
+                                <a href="javascript:void(0)"><img src="~/Images/jingdian.png" style="width:25px;height:25px; margin-right:10px;" /> 景点度假</a>
                                 <ul class="nav nav-subnav">
                                     <li> <a href="lyear_pages_doc.html"></a> </li>
                                     <li> <a href="lyear_pages_gallery.html">景点发布</a> </li>
@@ -54,9 +56,9 @@
                                 </ul>
                             </li>
                             <li class="nav-item nav-item-has-subnav">
-                                <a href="javascript:void(0)"><i class="mdi mdi-language-javascript"></i>订单管理</a>
+                                <a href="javascript:void(0)"><img src="~/Images/icon-.png" style="width:25px;height:25px; margin-right:10px;" /> 订单管理</a>
                                 <ul class="nav nav-subnav">
-                                    <li> <a href="lyear_js_datepicker.html">订单信息</a> </li>
+                                    <li> <a href="/Order/Index">订单信息</a> </li>
                                 </ul>
                             </li>
                             
@@ -64,7 +66,7 @@
                     </nav>
 
                     <div class="sidebar-footer">
-                        <p class="copyright">Copyright &copy; 2019. <a target="_blank" href="http://lyear.itshubao.com">IT书包</a> All rights reserved.</p>
+                        <p class="copyright">Copyright &copy; 2019. All rights reserved.</p>
                     </div>
                 </div>
 
@@ -114,12 +116,12 @@
             <!--End 页面主要内容-->
         </div>
     </div>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
-    <script type="text/javascript" src="js/main.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/js/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="~/js/main.min.js"></script>
     <!--图表插件-->
-    <script type="text/javascript" src="js/Chart.js"></script>
+    <script type="text/javascript" src="~/js/Chart.js"></script>
 </body>
 </html>
 
