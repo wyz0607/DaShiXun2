@@ -4,82 +4,76 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <input id="Button1" type="button" value="添加管理员" class="btn btn-info" onclick="AddUser()" />
-    <span style="margin-left:300px;">
-        <input type="text" id="UserName" class="layui-input-inline" placeholder="用户名查询" style="width:150px;height:35px;" />
-        <input type="text" id="UserPhone" class="layui-input-inline" placeholder="手机号查询" style="width:150px;height:35px;" />
-        <input type="button" value="搜索" onclick="Find()" class="layui-btn layui-btn-warm layui-btn-radius" />
-    </span>
+<span style="margin-left:300px;">
+    <input type="text" id="UserName" class="layui-input-inline" placeholder="用户名查询" style="width:150px;height:35px;" />
+    <input type="text" id="UserPhone" class="layui-input-inline" placeholder="手机号查询" style="width:150px;height:35px;" />
+    <input type="button" value="搜索" onclick="Find()" class="layui-btn layui-btn-warm layui-btn-radius" />
+</span>
 <div class="container" id="Admin" style="width:1200px;height:450px;background-color:#fff;margin-top:30px;">
 </div>
 <div id="demo1" style="margin-top:-130px;margin-left:400px;clear:both;"></div>
 
 <script>
     $().ready(function () {
-        $().ready(function () {
-            layui.use(['laypage', 'layer'], function () {
-                var laypage = layui.laypage;
-                $.ajax({
-                    url: "/UserInfo/GetAllUser?Role_Name=管理员",
-                    type: "get",
-                    dataType: "json",
-                    success: function (data) {
-                        $("#Admin").empty();
-                        //总页数大于页码总数
-                        for (var i = 0; i < data.length; i++) {
-                            laypage.render({
-                                elem: 'demo1'
-                                , count: data.length//数据总数
-                                , limit: 3
-                                , jump: function (obj) {
-                                    //模拟渲染
-                                    document.getElementById('Admin').innerHTML = function () {
-                                        var arr = []
-                                            , thisData = data.concat().splice(obj.curr * obj.limit - obj.limit, obj.limit);
-                                        layui.each(thisData, function (index, item) {
-                                            var addr = item.RName + "--" + item.CityName + "--" + item.CounName;
-                                            var IDnum = item.User_IDNumber.substr(0, item.User_IDNumber.length - 4) + "****";
-                                            var sex = "";
-                                            var tou = "";
-                                            if (item.UserSex == "男") {
-                                                sex = "<img src='/Images/男.png' width='30' height='30' />";
-                                                tou = '<img src="/Images/男头.png" class="layui-circle" width="150" height="150" style="border:1px solid #FF3333;" />';
-                                            }
-                                            else if (item.UserSex == "女")
-                                            {
-                                                sex = "<img src='/Images/女.png' width='30' height='30' />";
-                                                tou = '<img src="/Images/女头.png" class="layui-circle" width="150" height="150" style="border:1px solid #FF3333;" />';
-                                            }
-                                            else {
-                                                sex = "<img src='/Images/未知.png' width='30' height='30' />";
-                                                tou = '<img src="/Images/user.png" class="layui-circle" width="150" height="150" style="border:1px solid #FF3333;" />';
-                                            }
-                                            var page = '';
-                                            page += '<div class="col-lg-4" style="float:left;">';
-                                            page += '<table class="layui-table" lay-skin="line" ><tr><td colspan="2" rowspan="2" style="text-align:center;" >' + tou + '</td></tr><tr></tr><tr><td colspan="2"><p style="text-align:center;font-size:30px;" >' + item.UserName + '<span style="margin-left:20px;">' + sex + '</span></p></td></tr>';
-                                            page += '<tr><td>联系方式:</td><td>' + item.UserPhone + '</td></tr><tr><td>家乡地址:</td><td>' + addr + '</td></tr>';
-                                            page += '<tr><td>出生日期:</td><td>' + item.UserBirth + '</td></tr><tr><td>' + item.User_DocumentType + ':</td><td>' + IDnum + '</td></tr></table>';
-                                            page += "</div>";
-                                            arr.push(page);
-                                        });
-                                        return arr.join('');
-                                    }();
-                                }
-                            });
-                        }
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage;
+            $.ajax({
+                url: "/UserInfo/GetAllUser?Role_Name=管理员",
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    $("#Admin").empty();
+                    //总页数大于页码总数
+                    for (var i = 0; i < data.length; i++) {
+                        laypage.render({
+                            elem: 'demo1'
+                            , count: data.length//数据总数
+                            , limit: 3
+                            , jump: function (obj) {
+                                //模拟渲染
+                                document.getElementById('Admin').innerHTML = function () {
+                                    var arr = []
+                                        , thisData = data.concat().splice(obj.curr * obj.limit - obj.limit, obj.limit);
+                                    layui.each(thisData, function (index, item) {
+                                        var addr = item.RName + "--" + item.CityName + "--" + item.CounName;
+                                        var IDnum = item.User_IDNumber.substr(0, item.User_IDNumber.length - 4) + "****";
+                                        var sex = "";
+                                        var tou = "";
+                                        if (item.UserSex == "男") {
+                                            sex = "<img src='/Images/男.png' width='30' height='30' />";
+                                            tou = '<img src="/Images/男头.png" class="layui-circle" width="150" height="150" style="border:1px solid #FF3333;" />';
+                                        }
+                                        else if (item.UserSex == "女") {
+                                            sex = "<img src='/Images/女.png' width='30' height='30' />";
+                                            tou = '<img src="/Images/女头.png" class="layui-circle" width="150" height="150" style="border:1px solid #FF3333;" />';
+                                        }
+                                        else {
+                                            sex = "<img src='/Images/未知.png' width='30' height='30' />";
+                                            tou = '<img src="/Images/user.png" class="layui-circle" width="150" height="150" style="border:1px solid #FF3333;" />';
+                                        }
+                                        var page = '';
+                                        page += '<div class="col-lg-4" style="float:left;">';
+                                        page += '<table class="layui-table" lay-skin="line" onclick="Look(' + item.UserID + ')" ><tr><td colspan="2" rowspan="2" style="text-align:center;" >' + tou + '</td></tr><tr></tr><tr><td colspan="2"><p style="text-align:center;font-size:30px;" >' + item.UserName + '<span style="margin-left:20px;">' + sex + '</span></p></td></tr>';
+                                        page += '<tr><td>联系方式:</td><td>' + item.UserPhone + '</td></tr><tr><td>家乡地址:</td><td>' + addr + '</td></tr>';
+                                        page += '<tr><td>出生日期:</td><td>' + item.UserBirth + '</td></tr><tr><td>' + item.User_DocumentType + ':</td><td>' + IDnum + '</td></tr></table>';
+                                        page += "</div>";
+                                        arr.push(page);
+                                    });
+                                    return arr.join('');
+                                }();
+                            }
+                        });
                     }
-                })
-            });
+                }
+            })
         });
     });
     //添加管理员
-    function AddUser()
-    {
+    function AddUser() {
         location.href = "/UserInfo/AddUser";
     }
     //搜索
-    function Find()
-    {
-        debugger;
+    function Find() {
         var UserName = $("#UserName").val();
         var UserPhone = $("#UserPhone").val();
         layui.use(['laypage', 'layer'], function () {
@@ -120,7 +114,7 @@
                                         }
                                         var page = '';
                                         page += '<div class="col-lg-4" style="float:left;">';
-                                        page += '<table class="layui-table" lay-skin="line" ><tr><td colspan="2" rowspan="2" style="text-align:center;" >' + tou + '</td></tr><tr></tr><tr><td colspan="2"><p style="text-align:center;font-size:30px;" >' + item.UserName + '<span style="margin-left:20px;">' + sex + '</span></p></td></tr>';
+                                        page += '<table class="layui-table" lay-skin="line" onclick="Look(' + item.UserID + ')" ><tr><td colspan="2" rowspan="2" style="text-align:center;" >' + tou + '</td></tr><tr></tr><tr><td colspan="2"><p style="text-align:center;font-size:30px;" >' + item.UserName + '<span style="margin-left:20px;">' + sex + '</span></p></td></tr>';
                                         page += '<tr><td>联系方式:</td><td>' + item.UserPhone + '</td></tr><tr><td>家乡地址:</td><td>' + addr + '</td></tr>';
                                         page += '<tr><td>出生日期:</td><td>' + item.UserBirth + '</td></tr><tr><td>' + item.User_DocumentType + ':</td><td>' + IDnum + '</td></tr></table>';
                                         page += "</div>";
@@ -134,5 +128,9 @@
                 }
             })
         });
+    }
+    //查看详情
+    function Look(Id) {
+        location.href = '/UserInfo/ShowSomeOne?Id=' + Id;
     }
 </script>

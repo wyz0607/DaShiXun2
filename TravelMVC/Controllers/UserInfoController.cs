@@ -188,5 +188,14 @@ namespace TravelMVC.Controllers
             }
         }
         #endregion
+        #region 列表某人的详情显示
+        public ActionResult ShowSomeOne(int Id)
+        {
+            string jsonResult = HttpClientHelper.Send("get", "api/UserInfoApi/ShowUser");
+            List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(jsonResult);
+            UserInfo user = list.Where(s => s.UserID == Id).FirstOrDefault();
+            return View(user);
+        }
+        #endregion
     }
 }

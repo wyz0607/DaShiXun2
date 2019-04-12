@@ -537,16 +537,15 @@
     <Content Include="Views\UserInfo\ShowAdmin.cshtml" />
     <Content Include="Views\UserInfo\ShowCommon.cshtml" />
     <Content Include="Views\UserInfo\MyPage.cshtml" />
-    <Content Include="Views\UserInfo\View.cshtml" />
     <Content Include="Views\UserInfo\UpdPwd.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\UserInfo\ShowSomeOne.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AirTicket\" />
     <Folder Include="Views\News\" />
     <Folder Include="Views\SceneryHoliday\" />
-    <Folder Include="Views\UserInfo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
