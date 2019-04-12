@@ -191,6 +191,14 @@
     <Content Include="Images\out.png" />
     <Content Include="Images\user.png" />
     <Content Include="Images\xiu.png" />
+    <Content Include="Images\删除.png" />
+    <Content Include="Images\女.png" />
+    <Content Include="Images\女头.png" />
+    <Content Include="Images\女用户.png" />
+    <Content Include="Images\未知.png" />
+    <Content Include="Images\男.png" />
+    <Content Include="Images\男头.png" />
+    <Content Include="Images\男用户.png" />
     <Content Include="js\bootstrap-colorpicker\bootstrap-colorpicker.js" />
     <Content Include="js\bootstrap-colorpicker\bootstrap-colorpicker.min.js" />
     <Content Include="js\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
@@ -521,6 +529,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UserInfo\Login.cshtml" />
     <Content Include="Views\UserInfo\AddUser.cshtml" />
+    <Content Include="Views\UserInfo\ShowAdmin.cshtml" />
+    <Content Include="Views\UserInfo\ShowCommon.cshtml" />
+    <Content Include="Views\UserInfo\MyPage.cshtml" />
+    <Content Include="Views\UserInfo\View.cshtml" />
+    <Content Include="Views\UserInfo\UpdPwd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,112 @@
+﻿@model TravelMVC.Models.UserInfo
+@{
+    ViewBag.Title = "MyPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .tb1 tr {
+        margin-top: 20px;
+        margin-left: 50px;
+    }
+</style>
+<div id="main">
+    <div id="top" style="background-color:#FF9933;width:100%;height:40px;">
+        <span>个人资料</span>
+    </div>
+    <div id="bottom" style="width:100%;height:700px;">
+        <div id="left" style="background-color:#FFCC33;width:20%;height:100%;float:left;text-align:center;">
+            @if (Model.UserSex == "男")
+            {
+                <img src="~/Images/男头.png" width="150" height="150" />
+            }
+            else if (Model.UserSex == "女")
+            {
+                <img src="~/Images/女头.png" width="150" height="150" />
+            }
+            else
+            {
+                <img src="~/Images/user.png" width="150" height="150" />
+            }
+        </div>
+        <div id="right" style="background-color:#FFFFCC;width:80%;height:100%;float:left;">
+            <div id="t1" style="width:100px;height:140px;">
+                <p style="font-size:45px;">
+                    @Model.UserName
+                    <span>
+                        @if (Model.UserSex == "男")
+                        {
+                            <img src="~/Images/男.png" width="20" height="20" />
+                        }
+                        else if (Model.UserSex == "女")
+                        {
+                            <img src="~/Images/女.png" width="20" height="20" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/未知.png" width="20" height="20" />
+                        }
+                    </span>
+                </p>
+            </div>
+            <div id="b1">
+                <h5>基本资料</h5>
+                <table id="tb1" class="layui-table" lay-skin="line" style="background-color:#FFFFCC;" >
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>性别:</td>
+                        @if (Model.UserSex == "男")
+                        {
+                            <td>男</td>
+                        }
+                        else if (Model.UserSex == "女")
+                        {
+                            <td>女</td>
+                        }
+                        else
+                        {
+                            <td>未知</td>
+                        }
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>手机号:</td>
+                        <td>@Model.UserPhone</td>
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>生日:</td>
+                        <td>
+                            @Model.UserBirth
+                        </td>
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td colspan="2">
+                            <h3 style="margin:0 auto;">户籍所在地</h3>
+                        </td>
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>省:</td>
+                        <td>@Model.RName</td>
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>市:</td>
+                        <td>@Model.CityName</td>
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>县:</td>
+                        <td>@Model.CounName</td>
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>证件类型:</td>
+                        <td>@Model.User_DocumentType</td>
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>证件号:</td>
+                        <td>@Model.User_IDNumber</td>
+                    </tr>
+                    <tr style="margin-left:30px;margin-bottom:30px;">
+                        <td>密码:</td>
+                        <td>@Model.UserPwd <a href="/UserInfo/UpdPwd" style="color:blue;" >修改密码</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

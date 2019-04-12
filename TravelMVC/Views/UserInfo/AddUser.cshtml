@@ -5,7 +5,7 @@
 }
 
 <form class="layui-form" action="/UserInfo/AddUser" enctype="multipart/form-data" method="post">
-    <table style="margin:20px auto" class="layui-table" lay-skin="line" >
+    <table style="margin:20px auto" class="layui-table" lay-skin="line">
         <tr>
             <td style="width:150px;">用户名:</td>
             <td>
@@ -35,8 +35,8 @@
             <td style="width:150px;">性别:</td>
             <td>
                 <div class="layui-input-inline">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
-                    <input type="radio" name="sex" value="女" title="女">
+                    <input type="radio" name="UserSex" value="男" title="男" checked="">
+                    <input type="radio" name="UserSex" value="女" title="女">
                 </div>
             </td>
         </tr>
@@ -52,16 +52,19 @@
             <td style="width:150px;">地址</td>
             <td>
                 <div class="layui-input-inline">
-                    <select name="User_Loc_Prov" id="Select1" lay-verify="required" >
+                    <select id="Select1" name="User_Loc_Prov" lay-filter="test">
+                        <option value="">请选择</option>
+                        @foreach (SelectListItem item in ViewBag.s as IEnumerable<SelectListItem>)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
                     </select>
                 </div>
-                <div class="layui-input-inline">
-                    <select name="User_Loc_City" id="Select2" lay-filter="Select2">
-                    </select>
+                <div class="layui-input-inline layui-form" lay-filter="txt1">
+                        <select name="User_Loc_City" id="Select2" lay-filter="test1"></select>
                 </div>
-                <div class="layui-input-inline">
-                    <select name="User_Loc_Coun" id="Select3" lay-filter="Select3">
-                    </select>
+                <div class="layui-input-inline layui-form" lay-filter="txt2">
+                    <select name="User_Loc_Coun" id="Select3" lay-filter="tes2"></select>
                 </div>
             </td>
         </tr>
@@ -84,103 +87,76 @@
             <td style="width:150px;">证件号</td>
             <td>
                 <div class="layui-input-block">
-                    <input type="text" name="User_IDNumber" lay-verify="title" placeholder="请输入证件号" class="layui-input" style="margin-left:-110px;" >
+                    <input type="text" name="User_IDNumber" lay-verify="title" placeholder="请输入证件号" class="layui-input" style="margin-left:-110px;">
                 </div>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                    <button class="layui-btn" type="submit" lay-submit="" lay-filter="demo1" style="margin-left:146px;" >立即提交</button>
+                <button class="layui-btn" type="submit" lay-submit="" lay-filter="demo1" style="margin-left:146px;">立即提交</button>
             </td>
         </tr>
     </table>
 </form>
 <script>
-    $().ready(function ()
-    {
-        //layui样式
-        layui.use(['form', 'laydate'], function () {
-            var form = layui.form,
-            laydate = layui.laydate;
-            //出生日期
-            laydate.render({
-                elem: '#date1'
-            });
+    //layui样式
+    layui.use(['form', 'laydate', 'jquery'], function () {
+        var form = layui.form,
+            laydate = layui.laydate,
+            $ = layui.jquery;
+        //出生日期
+        laydate.render({
+            elem: '#date1',
+            type: 'date',
+            theme:'#00FF00'
         });
-        //绑定三级联动
-        BindSelect1();
-        $("#Select1").change(function ()
-        {
-            BindSelect2();
-        })//选择省后改变市级下拉框
-        $("#Select2").change(function ()
-        {
-            BindSelect3();
-        })//选择市后改变县级下拉框
-    })
-    //绑定第一个下拉框的方法
-    function BindSelect1()
-    {
-        $.ajax({
-            url: "/UserInfo/BindSelect",
-            type: "get",
-            dataType: "json",
-            success: function (data)
-            {
-                $("#Select1").empty();
-                $("#Select1").append("<option value=''>请选择</option>")
-                for (var i = 0; i < data.length; i++)
-                {
-                    $("#Select1").append("<option value='" + data[i].R_Id + "'>" + data[i].R_Name + "</option>");
+        form.on("select(test)", function (data) {
+            var Id = data.value;
+            $("#Select1").val(Id);
+            $("#Select2").empty();
+            var str = '<option value="" >请选择</option>';
+            $("#Select2").append(str);
+            $.ajax({
+                url: "/UserInfo/BindSelect2?Id=" + Id,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    for (var i in data) {
+                        var str = '<option value=' + data[i].R_Id + '>' + data[i].R_Name + '</option>';
+                        $("#Select2").append(str);
+                    }
+                    form.render('select', 'txt1');
+                    
                 }
-            }
+            })
         })
-    }
-    //绑定第二个下拉框的方法
-    function BindSelect2()
-    {
-        debugger;
-        var Id = $("#Select1").val();
-        if (Id == "")
-        {
-            return;
-        }
-        else
-        {
+        form.on("select(test1)", function (data) {
+            var id = data.value;
+            $("#Select2").val(id);
+        })
+        form.on("select(test1)", function (data) {
+            var Id = data.value;
+            $("#Select2").val(Id);
+            $("#Select3").empty();
+            var str = '<option value="" >请选择</option>';
+            $("#Select3").append(str);
             $.ajax({
-                url: "/UserInfo/BindSelect?Id=" + Id,
+                url: "/UserInfo/BindSelect2?Id=" + Id,
                 type: "get",
                 dataType: "json",
                 success: function (data) {
-                    $("#Select2").empty();
-                    $("#Select2").append("<option value=''>请选择</option>")
-                    for (var i = 0; i < data.length; i++) {
-                        $("#Select2").append("<option value='" + data[i].R_Id + "'>" + data[i].R_Name + "</option>");
+                    for (var i in data) {
+                        var str = '<option value=' + data[i].R_Id + '>' + data[i].R_Name + '</option>';
+                        $("#Select3").append(str);
                     }
+                    form.render('select', 'txt2');
                 }
             })
-        }
-    }
-    //绑定第三个下拉框的方法
-    function BindSelect3()
-    {
-        var Id = $("#Select2").val();
-        if (Id == "") {
-            return;
-        }
-        else {
-            $.ajax({
-                url: "/UserInfo/BindSelect?Id=" + Id,
-                type: "get",
-                dataType: "json",
-                success: function (data) {
-                    $("#Select3").empty();
-                    $("#Select3").append("<option value=''>请选择</option>")
-                    for (var i = 0; i < data.length; i++) {
-                        $("#Select3").append("<option value='" + data[i].R_Id + "'>" + data[i].R_Name + "</option>");
-                    }
-                }
-            })
-        }
-    }
+        })
+        form.on("select(test2)", function (data) {
+            var id = data.value;
+            $("#Select3").val(id);
+        })
+    });
 </script>
