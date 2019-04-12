@@ -1,0 +1,96 @@
+﻿@model TravelMVC.Models.Scenery
+
+@{
+    ViewBag.Title = "AddNews";
+}
+
+<h2>添加新闻</h2>
+<script src="~/layui/layui.js"></script>
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.form.js"></script>
+
+
+<div style="position:absolute;margin-left:350px">
+    @using (Html.BeginForm("AddNews", "News", FormMethod.Post, new { enctype = "multipart/form-data", @class = "layui-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="div1" class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">新闻编号:</label>
+                <div class="layui-input-block">
+                    <input name="N_Id" class="layui-input" type="text" placeholder="请输入新闻编号">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">新闻标题:</label> 
+                <div class="layui-input-block">
+                    <input name="N_MainTitle " class="layui-input" type="text" placeholder="请输入新闻标题">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">作者:</label>
+                <div class="layui-input-block">
+                    <input name="N_MainTitle " class="layui-input" type="text" placeholder="请输入新闻作者">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">新闻内容:</label>
+                <div class="layui-input-block">
+                    <input name="MenuIntroduce" class="layui-input" type="text" placeholder="请输入新闻内容">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">日期:</label>
+               
+                    <span id="testView"></span>
+                    <div id="test2"></div>
+                
+            </div>
+
+            <br />
+            <div class="layui-form-item">
+                <div class="layui-input-inline" >
+                    <input type="submit" class="layui-btn layui-btn-fluid" value="保存" />
+                </div>
+            </div>
+        </div>
+    }
+        <br />
+        <br />
+    <div>
+        @Html.ActionLink("返回列表", "ShowNews", null, new { @class = "layui-btn layui-btn-xs layui-btn-normal" })
+    </div>
+
+</div>
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+    });
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+
+        //layer.msg('添加菜品时,销量默认为0');
+    });
+
+    layui.use(['form', 'laydate'], function () {
+        var form = layui.form,
+            laydate = layui.laydate;
+        //出生日期
+        laydate.render({
+            elem: '#date1'
+        });
+    });
+</script>
+
+

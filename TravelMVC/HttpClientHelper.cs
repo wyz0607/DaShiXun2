@@ -10,7 +10,7 @@ namespace TravelMVC.Controllers
 {
     public class HttpClientHelper
     {
-        public static string Send(string methed,string apimethed,string JsonStr)
+        public static string Send(string methed,string apimethed,string JsonStr=null)
         {
             Uri uri = new Uri("http://localhost:61521/");
             HttpClient client = new HttpClient();

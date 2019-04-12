@@ -1,0 +1,99 @@
+﻿@model IEnumerable<TravelMVC.Models.Scenery>
+
+@{
+    ViewBag.Title = "ShowNews";
+}
+
+<h2>ShowNews</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Genus_Prov)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Genus_City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Genus_Coun)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Level)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Fit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Introduction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S_Photo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Genus_Prov)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Genus_City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Genus_Coun)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Level)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Fit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Grade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Introduction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S_Photo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
