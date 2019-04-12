@@ -181,15 +181,18 @@
     <Content Include="css\materialdesignicons.min.css" />
     <Content Include="css\style.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="font2\fonts\materialdesignicons.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\materialdesignicons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\geRen.png" />
+    <Content Include="Images\icon-.png" />
+    <Content Include="Images\jingdian.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\logo2.png" />
     <Content Include="Images\out.png" />
     <Content Include="Images\user.png" />
+    <Content Include="Images\xiayiye.png" />
     <Content Include="Images\xiu.png" />
     <Content Include="Images\删除.png" />
     <Content Include="Images\女.png" />
@@ -199,6 +202,8 @@
     <Content Include="Images\男.png" />
     <Content Include="Images\男头.png" />
     <Content Include="Images\男用户.png" />
+    <Content Include="Images\yonghuguanli.png" />
+    <Content Include="Images\zixun.png" />
     <Content Include="js\bootstrap-colorpicker\bootstrap-colorpicker.js" />
     <Content Include="js\bootstrap-colorpicker\bootstrap-colorpicker.min.js" />
     <Content Include="js\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
@@ -495,13 +500,13 @@
     <Content Include="js\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
     <Content Include="js\bootstrap-datepicker\bootstrap-datepicker3.css.map" />
     <Content Include="js\bootstrap-datepicker\bootstrap-datepicker3.min.css.map" />
-    <Content Include="font2\fonts\materialdesignicons.eot" />
-    <Content Include="font2\fonts\materialdesignicons.ttf" />
-    <Content Include="font2\fonts\materialdesignicons.woff" />
-    <Content Include="font2\fonts\materialdesignicons.woff2" />
     <Content Include="layui\font\iconfont.eot" />
     <Content Include="layui\font\iconfont.ttf" />
     <Content Include="layui\font\iconfont.woff" />
+    <Content Include="fonts\materialdesignicons.woff2" />
+    <Content Include="fonts\materialdesignicons.woff" />
+    <Content Include="fonts\materialdesignicons.ttf" />
+    <Content Include="fonts\materialdesignicons.eot" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -534,13 +539,14 @@
     <Content Include="Views\UserInfo\MyPage.cshtml" />
     <Content Include="Views\UserInfo\View.cshtml" />
     <Content Include="Views\UserInfo\UpdPwd.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AirTicket\" />
     <Folder Include="Views\News\" />
-    <Folder Include="Views\Order\" />
     <Folder Include="Views\SceneryHoliday\" />
+    <Folder Include="Views\UserInfo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
