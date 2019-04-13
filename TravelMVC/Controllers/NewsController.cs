@@ -16,6 +16,11 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult AddNews()
         {
+            string result = HttpClientHelper.Send("get", "api/NewsApi/ShowNewTypes", null);
+            var ntype = JsonConvert.DeserializeObject<List<Newstype>>(result);
+            SelectList slist = new SelectList(ntype, "T_Id", "N_Name");
+            ViewBag.slist = slist;
+
             return View();
         }
         [HttpPost]
@@ -34,31 +39,11 @@ namespace TravelMVC.Controllers
             }
 
         }
-        //添加新闻类别
-        [HttpGet]
-        public ActionResult AddNewsType()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult AddNewsType(Newstype sce)
-        {
-            string strJson = JsonConvert.SerializeObject(sce);
-            string result = HttpClientHelper.Send("post", "api/NewsApi/AddNewsType", strJson);
-            if (result.Contains("成功"))
-            {
-                return Redirect("/News/ShowNews");
-            }
-            else
-            {
-                return Content("<script>alert('" + result + "')</script>");
-
-            }
-
-        }
+     
 
 
         //显示新闻
+        [HttpGet]
         public ActionResult ShowNews(int pageindex = 1)
         {
             string result = HttpClientHelper.Send("get", "api/NewsApi/ShowNews", null);
@@ -71,7 +56,7 @@ namespace TravelMVC.Controllers
 
         }
         //分页
-        public ActionResult Nw(int pageIndex, int pageSize = 6)
+        public ActionResult News(int pageIndex, int pageSize = 6)
         {
             ViewBag.pIndex = pageIndex;
             string json = HttpClientHelper.Send("get", "api/NewsApi/ShowNews", null);
@@ -81,16 +66,17 @@ namespace TravelMVC.Controllers
         }
 
         //删除新闻
-        public ActionResult DelNews(string id)
+        public ActionResult DelNews(int id)
         {
-            string str = "";
-            String[] ids = id.Split(',');
-            foreach (var item in ids)
-            {
-                str = HttpClientHelper.Send("delete", "api/NewsApi/DelNews?N_Id=" + item, "null");
-            }
+            string strId = id.ToString();
+            //string str = "";
+            //string[] ids = strId.Split(',');
+            //foreach (var item in ids)
+            //{
+            int result = Convert.ToInt32(HttpClientHelper.Send("delete", "api/NewsApi/DelNews?Id=" + strId));
+            //}
 
-            if (str.Contains("成功"))
+            if (result>0)
             {
                 return Redirect("/News/ShowNews");
 
@@ -104,16 +90,22 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult UptNews(int id)
         {
-            string str2 = HttpClientHelper.Send("get", "api/NewsApi/ShowNews", null);
+            Session["id"] = id;
+            string result = HttpClientHelper.Send("get", "api/NewsApi/ShowNewTypes", null);
+            var ntype = JsonConvert.DeserializeObject<List<Newstype>>(result);
+            SelectList slist = new SelectList(ntype, "T_Id", "N_Name");
+            ViewBag.slist = slist;
+            string str2 = HttpClientHelper.Send("get", "api/NewsApi/UptNews?id=" + id);
             List<NewsList> list = JsonConvert.DeserializeObject<List<NewsList>>(str2);
-            NewsList list1 = list.Where(c => c.N_Id == id).FirstOrDefault();
-            return View(list1);
+            //NewsList list1 = list.Where(c => c.N_Id == id).FirstOrDefault();
+            return View(list);
         }
         [HttpPost]
         public ActionResult UptNews(NewsList kit)
         {
+            kit.N_Id = Convert.ToInt32(Session["id"]);
             string jsonstr = JsonConvert.SerializeObject(kit);
-            string str = HttpClientHelper.Send("put", "api/NewsApi/UptNews", jsonstr);
+            string str = HttpClientHelper.Send("post", "api/NewsApi/UptNews", jsonstr);
             if (str.Contains("成功"))
             {
                 return Redirect("/News/ShowNews");

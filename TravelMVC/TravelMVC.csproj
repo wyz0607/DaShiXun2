@@ -176,6 +176,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\layDate-v5.0.9\laydate\laydate.js" />
+    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\font\iconfont.svg" />
+    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\laydate.css" />
+    <Content Include="Content\layDate-v5.0.9\test.html" />
     <Content Include="css\animate.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\materialdesignicons.min.css" />
@@ -494,6 +498,13 @@
     <Content Include="layui\font\iconfont.eot" />
     <Content Include="layui\font\iconfont.ttf" />
     <Content Include="layui\font\iconfont.woff" />
+    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\font\iconfont.eot" />
+    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\font\iconfont.ttf" />
+    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\font\iconfont.woff" />
+    <Content Include="Content\layDate-v5.0.9\文档\官网.url" />
+    <Content Include="Content\layDate-v5.0.9\文档\文档.url" />
+    <Content Include="Content\layDate-v5.0.9\文档\社区.url" />
+    <Content Include="Content\layDate-v5.0.9\更新日志.url" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -521,11 +532,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UserInfo\Login.cshtml" />
     <Content Include="Views\UserInfo\AddUser.cshtml" />
+    <Content Include="Views\News\AddNews.cshtml" />
+    <Content Include="Views\News\ShowNews.cshtml" />
+    <Content Include="Views\News\UptNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AirTicket\" />
-    <Folder Include="Views\News\" />
     <Folder Include="Views\Order\" />
     <Folder Include="Views\SceneryHoliday\" />
   </ItemGroup>
