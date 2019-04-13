@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "AddHoliday";
+}
+
+<h2>AddHoliday</h2>
+<link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
+<script src="~/Scripts/vue.js"></script>
+<script src="~/Scripts/ElementUI/element-ui.js"></script>
+<script src="~/axios-master/dist/axios.js"></script>
+
+<div id='app'>
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="度假主题">
+            <el-input v-model="form.H_Theme"></el-input>
+        </el-form-item>
+        <el-form-item label="目的地">
+            <el-input v-model="form.H_Destination"></el-input>
+        </el-form-item>
+        <el-form-item label="儿童票">
+            <el-input v-model="form.H_ChildPrice"></el-input>
+        </el-form-item>
+        <el-form-item label="成人票">
+            <el-input v-model="form.H_RetailPrice"></el-input>
+        </el-form-item>
+        <el-form-item label="学生票">
+            <el-input v-model="form.H_StudentPrice"></el-input>
+        </el-form-item>
+        <el-form-item label="出发日期">
+            <el-col :span="11">
+                <el-date-picker type="date"  format="yyyy 年 MM 月 dd 日" placeholder="选择日期" v-model="form.H_Data" style="width: 100%;"></el-date-picker>
+            </el-col>
+            <el-col class="line" :span="2">-</el-col>
+            <el-col :span="11">
+                <el-time-picker type="fixed-time" format="HH 时 mm 分 ss 秒" placeholder="选择时间" style="width: 100%;"></el-time-picker>
+            </el-col>
+        </el-form-item>
+        <el-form-item label="往返交通">
+            <el-input v-model="form.H_Traffic"></el-input>
+        </el-form-item>
+        <el-form-item label="天数">
+            <el-select v-model="form.H_TravelDays" placeholder="请选择活动区域">
+                <el-option label="1天" value="1"></el-option>
+                <el-option label="2天" value="2"></el-option>
+                <el-option label="3天" value="3"></el-option>
+                <el-option label="4天" value="4"></el-option>
+                <el-option label="5天" value="5"></el-option>
+                <el-option label="6天" value="6"></el-option>
+                <el-option label="7天" value="7"></el-option>
+                <el-option label="8天" value="8"></el-option>
+                <el-option label="9天" value="9"></el-option>
+                <el-option label="10天" value="10"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="参与者">
+            <el-input v-model="form.H_Participant"></el-input>
+        </el-form-item>
+        <el-form-item label="行程说明">
+            <el-input v-model="form.H_Explain"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @@click="onSubmit">立即创建</el-button>
+            <el-button>取消</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<script>
+    window.onload = function () {
+        var Ctor = new Vue({
+            el: '#app',
+            H_Data1:'',
+            data: {
+                form: {
+                    H_Theme: '',
+                    H_Destination: '',
+                    H_RetailPrice: 0,
+                    H_ChildPrice: 0,
+                    H_StudentPrice: 0,
+                    H_Data: '',
+                    H_Traffic: '',
+                    H_TravelDays: '',
+                    H_Participant: '',
+                    H_Explain: ''
+                }
+            },
+            methods: {
+                
+                onSubmit() {
+                   
+                    console.log(JSON.stringify(this.form));
+                    var self = this;
+                    axios.post("/SceneryHoliday/AddHoliday", this.form).then(function (res) {
+                        self.form = {};
+                        console.log(res.data);
+                    }).catch(function (err) {
+                        console.log(err.data)
+                    })
+                    
+                }
+            },
+            created: function () {
+                //一般来说这里会发送ajax请求
+
+                //axios发送ajax
+                //axios.get('url').then(function(response){
+                //成功时回调 response响应的数据 赋值给this.user
+                //})catch(function(error){
+                //失败时回调 error失败时的错误消息
+
+                //})
+            }
+        });
+    }
+</script>
