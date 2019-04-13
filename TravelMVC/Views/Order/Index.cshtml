@@ -1,0 +1,119 @@
+﻿@model IEnumerable<TravelMVC.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>
+<script src="~/layui/layui.js"></script>
+<link href="~/layui/css/layui.css" rel="stylesheet" />
+<script src="~/js/jquery.min.js"></script>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("订单编号")
+        </th>
+        <th>
+            @Html.DisplayName("用户编号")
+        </th>
+        <th>
+            @Html.DisplayName("商品编号")
+        </th>
+        <th>
+            @Html.DisplayName("商品类型")
+        </th>
+        <th>
+            @Html.DisplayName("订单时间")
+        </th>
+        <th>
+            @Html.DisplayName("总价钱")
+        </th>
+        <th>
+            @Html.DisplayName("订单状态")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.O_OrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.O_UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.O_GoodsID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.O_GoodsType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.O_OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.O_TotalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.O_OrderState)
+            </td>
+            <td>
+                <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+                    <button class="layui-btn" data-method="notice" id="@item.O_UserID" name="@item.O_GoodsType" onclick="dian(this)">用户信息</button>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+<script>
+
+    function dian(obj) {
+        $.ajax({
+            url: "http://localhost:61521/api/UserInfoApi/GetOneUser?id=" + obj.id,
+            success: function (data) {
+                var UserName = data.UserName;
+                var UserPhone = data.UserPhone;
+                var Sex = data.UserSex;
+                layui.use('layer', function () { //独立版的layer无需执行这一句
+                    var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+
+                    //触发事件
+                    var active = {
+                        notice: function () {
+                            //示范一个公告层
+                            layer.open({
+                                type: 1
+                                , title: false //不显示标题栏
+                                , closeBtn: false
+                                , area: '300px;'
+                                , shade: 0.8
+                                , id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                                , btn: ['我知道了', '返回']
+                                , btnAlign: 'c'
+                                , moveType: 1 //拖拽模式，0或者1
+                                , content: '<div id="myDiv" style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">姓名:' + UserName + '<br>身份证号:' + data.User_IDNumber + '<br>手机号:' + UserPhone + '<br>性别:' + Sex + '<br>购票类型:' + obj.name + '<br></div>'
+
+                            });
+                        }
+                    };
+
+                    $('#layerDemo .layui-btn').on('click', function () {
+                        var othis = $(this), method = othis.data('method');
+                        active[method] ? active[method].call(this, othis) : '';
+                    });
+
+                });
+            }
+        })
+    }
+
+    
+</script>

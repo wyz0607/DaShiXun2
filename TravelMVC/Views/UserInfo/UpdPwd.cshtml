@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "UpdPwd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="layui-table" lay-skin="line" id="tb">
+    <tr>
+        <td colspan="2">
+            密码验证
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <input type="text" name="InputPwd" id="InputPwd" lay-verify="title" autocomplete="off" placeholder="请输入原密码" class="layui-input">
+                </div>
+            </div>
+            <span id="YEPwdTxt" style="display:none;color:red">不正确</span>
+            <span id="YEPwdTxts" style="display:none;color:red">验证成功</span>
+            <span id="NoNone" style="display:none;color:red;">不可为空</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <input type="button" id="btn1" value="点击验证" onclick="Yan()" class="layui-btn layui-btn-sm" />
+        </td>
+    </tr>
+</table>
+<script>
+    function Yan()
+    {
+        var InputPwd = $("#InputPwd").val();
+        if (InputPwd == "")
+        {
+            document.getElementById("YEPwdTxt").style.display = "none";
+            document.getElementById("YEPwdTxts").style.display = "none";
+            document.getElementById("NoNone").style.display = "";
+        }
+        else
+        {
+            $.ajax({
+                url: "/UserInfo/HaveOrNo?InputPwd=" + InputPwd,
+                type: "get",
+                dataType: "json",
+                success: function (data)
+                {
+                    if (data > 0)
+                    {
+                        document.getElementById("YEPwdTxt").style.display = "none";
+                        document.getElementById("YEPwdTxts").style.display = "";
+                        document.getElementById("NoNone").style.display = "none";
+                        $("#btn1").attr("disabled", true);
+                        document.getElementById("btn1").style.backgroundColor = "#00FF00";
+                        $("#btn1").attr("value", '已验证');
+                        $("#tb").append("<tr><td>请输入新密码:</td><td><div class='layui-input-inline'><input type='text' id='Pwd1' class='layui-input' placeholder='请输入新密码'/></div></td></tr>");
+                        $("#tb").append("<tr><td>again:</td><td><div class='layui-input-inline'><input type='text' id='Pwd2' class='layui-input' placeholder='请再次输入密码'/></div></td></tr>");
+                        $("#tb").append("<tr><td colspan='2'><span id='error1' style='display: none; color: red'>您还没有输入自己想要修改的密码</span><span id='error2' style='display: none; color: red'>请再次输入自己的密码</span><span id='error3' style='display: none; color: red'>两次密码输入不一致</span></td></tr>");
+                        $("#tb").append("<tr><td colspan='2' ><input type='button' class='layui-btn layui-btn-normal' value='修改密码' onclick='Upd()'/></td></tr>");
+                    }
+                    else {
+                        document.getElementById("YEPwdTxt").style.display = "";
+                        document.getElementById("YEPwdTxts").style.display = "none";
+                        document.getElementById("NoNone").style.display = "none";
+                    }
+                }
+            })
+        }
+    }
+    function Upd()
+    {
+        var Pwd1 = $("#Pwd1").val();
+        var Pwd2 = $("#Pwd2").val();
+        if (Pwd1 == "") {
+            document.getElementById("error1").style.display = "";
+            document.getElementById("error2").style.display = "none";
+            document.getElementById("error3").style.display = "none";
+        }
+        else if (Pwd2 == "") {
+            document.getElementById("error1").style.display = "none";
+            document.getElementById("error2").style.display = "";
+            document.getElementById("error3").style.display = "none";
+        }
+        else if (Pwd1 != Pwd2)
+        {
+            document.getElementById("error1").style.display = "none";
+            document.getElementById("error2").style.display = "none";
+            document.getElementById("error3").style.display = "";
+        }
+        else
+        {
+            location.href = "/UserInfo/ChangePwd?NewPwd=" + Pwd1;
+        }
+    }
+</script>

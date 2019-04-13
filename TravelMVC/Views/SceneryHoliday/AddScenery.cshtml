@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "AddScenery";
+}
+
+<h2>AddScenery</h2>
+<link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
+<script src="~/Scripts/vue.js"></script>
+<script src="~/Scripts/ElementUI/element-ui.js"></script>
+<script src="~/axios-master/dist/axios.js"></script>
+
+
+<div id='app'>
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="景点名称">
+            <el-input v-model="form.S_Name"></el-input>
+        </el-form-item>
+        <el-form-item label="省">
+            <el-select v-model="form.S_Genus_Prov" @@change="DuoJi" placeholder="请选择活动区域">
+                    <el-option v-for="item in Prov"
+                               :key="item.R_Id"
+                               :label="item.R_Name"
+                               :value="item.R_Id"
+                               >
+                    </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="市">
+            <el-select v-model="form.S_Genus_City" @@change="DuoJi1" placeholder="请选择活动区域">
+                <el-option v-for="item in City"
+                           :key="item.R_Id"
+                           :label="item.R_Name"
+                           :value="item.R_Id">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="县">
+            <el-select v-model="form.S_Genus_Coun" placeholder="请选择活动区域">
+                <el-option v-for="item in Coun"
+                           :key="item.R_Id"
+                           :label="item.R_Name"
+                           :value="item.R_Id">
+            </el-select>
+        </el-form-item>
+        <el-form-item label="等级">
+            <el-select v-model="form.S_Level" placeholder="请选择活动区域">
+                <el-option label="5A" value="5A"></el-option>
+                <el-option label="4A" value="4A"></el-option>
+                <el-option label="3A" value="3A"></el-option>
+                <el-option label="2A" value="2A"></el-option>
+                <el-option label="1A" value="1A"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="景区类型">
+            <el-select v-model="form.S_Type" placeholder="请选择活动区域">
+                <el-option v-for="item in Type"
+                           :key="item.S_Id"
+                           :label="item.S_Name"
+                           :value="item.S_Id">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="适合人群">
+            <el-input v-model="form.S_Fit"></el-input>
+        </el-form-item>
+        <el-form-item label="价格">
+            <el-input v-model="form.S_Price"></el-input>
+        </el-form-item>
+        <el-form-item label="介绍">
+            <el-input type="textarea" v-model="form.S_Introduction"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-upload action="/SceneryHoliday/AddPhoto"
+                       list-type="picture-card"
+                       :on-preview="handlePictureCardPreview"
+                       :on-remove="handleRemove"
+                       name="file"
+                       >
+                <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible" size="tiny">
+                <img width="100%" :src="form.S_Photo" alt="">
+            </el-dialog>
+        </el-form-item>
+
+
+        <el-form-item>
+            <el-button type="primary" @@click="onSubmit">立即创建</el-button>
+            <el-button>取消</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<script>
+    window.onload = function () {
+        var Ctor = new Vue({
+            el: '#app',
+            data: {
+                dialogVisible: false,
+                Type: [],
+                Prov: [],
+                City: [],
+                Coun:[],
+                form: {
+                    S_Name: '',
+                    S_Genus_Prov: 1,
+                    S_Genus_City: '',
+                    S_Genus_Coun: '',
+                    S_Level: '',
+                    S_Type: 1,
+                    S_Fit: '',
+                    S_Price: '',
+                    S_Introduction: '',
+                    S_Photo: ''
+                }
+            },
+            methods: {
+                handleRemove(file, fileList) {
+                    console.log(file, fileList);
+                },
+                handlePictureCardPreview(file) {
+                    console.log(file.response);
+                    this.form.S_Photo = file.response;
+                    this.dialogVisible = true;
+                },
+                onSubmit() {
+                    console.log(JSON.stringify(this.form));
+                    var self = this;
+                    axios.post("/SceneryHoliday/AddScenery", this.form).then(function (res) {
+                        self.form = {};
+                        console.log(res.data);
+                    }).catch(function (err) {
+                        console.log(err.data)
+                    })
+                },
+                DuoJi(n) {
+                    this.form.S_Genus_City = '';
+                    this.form.S_Genus_Coun = '';
+                    var self = this;
+                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + n).then(function (res) {
+                        self.City = res.data;
+                        console.log(self.City);
+                    }).catch(function (err) {
+                        console.log(err);
+                        console.log(err.data)
+                    })
+                },
+                DuoJi1(n) {
+                    this.form.S_Genus_Coun = '';
+                    var self = this;
+                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + n).then(function (res) {
+                        self.Coun = res.data;
+                        console.log(self.Coun);
+                    }).catch(function (err) {
+                        console.log(err);
+                        console.log(err.data)
+                    })
+                }
+            },
+            created: function () {
+                var self = this;
+                axios.get("http://localhost:61521/api/SceneryHolidayApi/ShowSceneryType").then(function (res) {
+                    self.Type = res.data;
+                    console.log(self.Type);
+                }).catch(function (err) {
+                    console.log(err);
+                    console.log(err.data)
+                    })
+                axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion").then(function (res) {
+                    self.Prov = res.data;
+                    console.log(self.Prov);
+                }).catch(function (err) {
+                    console.log(err);
+                    console.log(err.data)
+                })
+            }
+        });
+    }
+
+</script>

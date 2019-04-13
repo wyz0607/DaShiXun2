@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace TravelMVC.Models
 {

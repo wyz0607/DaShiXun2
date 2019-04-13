@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -172,29 +174,128 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="axios-master\.eslintrc.js" />
+    <Content Include="axios-master\.gitignore" />
+    <Content Include="axios-master\dist\axios.js" />
+    <Content Include="axios-master\dist\axios.min.js" />
+    <Content Include="axios-master\examples\all\index.html" />
+    <Content Include="axios-master\examples\amd\index.html" />
+    <Content Include="axios-master\examples\get\index.html" />
+    <Content Include="axios-master\examples\get\server.js" />
+    <Content Include="axios-master\examples\post\index.html" />
+    <Content Include="axios-master\examples\post\server.js" />
+    <Content Include="axios-master\examples\server.js" />
+    <Content Include="axios-master\examples\transform-response\index.html" />
+    <Content Include="axios-master\examples\upload\index.html" />
+    <Content Include="axios-master\examples\upload\server.js" />
+    <Content Include="axios-master\Gruntfile.js" />
+    <Content Include="axios-master\index.js" />
+    <Content Include="axios-master\karma.conf.js" />
+    <Content Include="axios-master\lib\adapters\http.js" />
+    <Content Include="axios-master\lib\adapters\xhr.js" />
+    <Content Include="axios-master\lib\axios.js" />
+    <Content Include="axios-master\lib\cancel\Cancel.js" />
+    <Content Include="axios-master\lib\cancel\CancelToken.js" />
+    <Content Include="axios-master\lib\cancel\isCancel.js" />
+    <Content Include="axios-master\lib\core\Axios.js" />
+    <Content Include="axios-master\lib\core\createError.js" />
+    <Content Include="axios-master\lib\core\dispatchRequest.js" />
+    <Content Include="axios-master\lib\core\enhanceError.js" />
+    <Content Include="axios-master\lib\core\InterceptorManager.js" />
+    <Content Include="axios-master\lib\core\mergeConfig.js" />
+    <Content Include="axios-master\lib\core\settle.js" />
+    <Content Include="axios-master\lib\core\transformData.js" />
+    <Content Include="axios-master\lib\defaults.js" />
+    <Content Include="axios-master\lib\helpers\bind.js" />
+    <Content Include="axios-master\lib\helpers\buildURL.js" />
+    <Content Include="axios-master\lib\helpers\combineURLs.js" />
+    <Content Include="axios-master\lib\helpers\cookies.js" />
+    <Content Include="axios-master\lib\helpers\deprecatedMethod.js" />
+    <Content Include="axios-master\lib\helpers\isAbsoluteURL.js" />
+    <Content Include="axios-master\lib\helpers\isURLSameOrigin.js" />
+    <Content Include="axios-master\lib\helpers\normalizeHeaderName.js" />
+    <Content Include="axios-master\lib\helpers\parseHeaders.js" />
+    <Content Include="axios-master\lib\helpers\spread.js" />
+    <Content Include="axios-master\lib\utils.js" />
+    <Content Include="axios-master\sandbox\client.html" />
+    <Content Include="axios-master\sandbox\client.js" />
+    <Content Include="axios-master\sandbox\server.js" />
+    <Content Include="axios-master\test\manual\basic.html" />
+    <Content Include="axios-master\test\manual\cors.html" />
+    <Content Include="axios-master\test\manual\promise.js" />
+    <Content Include="axios-master\test\specs\adapter.spec.js" />
+    <Content Include="axios-master\test\specs\api.spec.js" />
+    <Content Include="axios-master\test\specs\basicAuth.spec.js" />
+    <Content Include="axios-master\test\specs\cancel.spec.js" />
+    <Content Include="axios-master\test\specs\cancel\Cancel.spec.js" />
+    <Content Include="axios-master\test\specs\cancel\CancelToken.spec.js" />
+    <Content Include="axios-master\test\specs\cancel\isCancel.spec.js" />
+    <Content Include="axios-master\test\specs\core\createError.spec.js" />
+    <Content Include="axios-master\test\specs\core\enhanceError.spec.js" />
+    <Content Include="axios-master\test\specs\core\mergeConfig.spec.js" />
+    <Content Include="axios-master\test\specs\core\settle.spec.js" />
+    <Content Include="axios-master\test\specs\core\transformData.spec.js" />
+    <Content Include="axios-master\test\specs\defaults.spec.js" />
+    <Content Include="axios-master\test\specs\headers.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\bind.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\buildURL.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\combineURLs.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\cookies.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\isAbsoluteURL.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\isURLSameOrigin.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\normalizeHeaderName.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\parseHeaders.spec.js" />
+    <Content Include="axios-master\test\specs\helpers\spread.spec.js" />
+    <Content Include="axios-master\test\specs\instance.spec.js" />
+    <Content Include="axios-master\test\specs\interceptors.spec.js" />
+    <Content Include="axios-master\test\specs\options.spec.js" />
+    <Content Include="axios-master\test\specs\progress.spec.js" />
+    <Content Include="axios-master\test\specs\promise.spec.js" />
+    <Content Include="axios-master\test\specs\requests.spec.js" />
+    <Content Include="axios-master\test\specs\transform.spec.js" />
+    <Content Include="axios-master\test\specs\utils\deepMerge.spec.js" />
+    <Content Include="axios-master\test\specs\utils\extend.spec.js" />
+    <Content Include="axios-master\test\specs\utils\forEach.spec.js" />
+    <Content Include="axios-master\test\specs\utils\isX.spec.js" />
+    <Content Include="axios-master\test\specs\utils\merge.spec.js" />
+    <Content Include="axios-master\test\specs\utils\trim.spec.js" />
+    <Content Include="axios-master\test\specs\xsrf.spec.js" />
+    <Content Include="axios-master\test\specs\__helpers.js" />
+    <Content Include="axios-master\test\unit\adapters\http.js" />
+    <Content Include="axios-master\webpack.config.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\layDate-v5.0.9\laydate\laydate.js" />
-    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\font\iconfont.svg" />
-    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\laydate.css" />
-    <Content Include="Content\layDate-v5.0.9\test.html" />
+    <Content Include="Content\ElementUI\element-ui.css" />
     <Content Include="css\animate.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\materialdesignicons.min.css" />
     <Content Include="css\style.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="font2\fonts\materialdesignicons.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\materialdesignicons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\geRen.png" />
+    <Content Include="Images\icon-.png" />
+    <Content Include="Images\jingdian.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\logo2.png" />
     <Content Include="Images\out.png" />
     <Content Include="Images\user.png" />
+    <Content Include="Images\xiayiye.png" />
     <Content Include="Images\xiu.png" />
+    <Content Include="Images\删除.png" />
+    <Content Include="Images\女.png" />
+    <Content Include="Images\女头.png" />
+    <Content Include="Images\女用户.png" />
+    <Content Include="Images\未知.png" />
+    <Content Include="Images\男.png" />
+    <Content Include="Images\男头.png" />
+    <Content Include="Images\男用户.png" />
+    <Content Include="Images\yonghuguanli.png" />
+    <Content Include="Images\zixun.png" />
     <Content Include="js\bootstrap-colorpicker\bootstrap-colorpicker.js" />
     <Content Include="js\bootstrap-colorpicker\bootstrap-colorpicker.min.js" />
     <Content Include="js\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
@@ -495,17 +596,36 @@
     <Content Include="font2\fonts\materialdesignicons.ttf" />
     <Content Include="font2\fonts\materialdesignicons.woff" />
     <Content Include="font2\fonts\materialdesignicons.woff2" />
-    <Content Include="layui\font\iconfont.eot" />
-    <Content Include="layui\font\iconfont.ttf" />
-    <Content Include="layui\font\iconfont.woff" />
-    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\font\iconfont.eot" />
-    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\font\iconfont.ttf" />
-    <Content Include="Content\layDate-v5.0.9\laydate\theme\default\font\iconfont.woff" />
-    <Content Include="Content\layDate-v5.0.9\文档\官网.url" />
-    <Content Include="Content\layDate-v5.0.9\文档\文档.url" />
-    <Content Include="Content\layDate-v5.0.9\文档\社区.url" />
-    <Content Include="Content\layDate-v5.0.9\更新日志.url" />
+    <Content Include="Content\ElementUI\fonts\element-icons.ttf" />
+    <Content Include="Content\ElementUI\fonts\element-icons.woff" />
+    <Content Include="axios-master\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="axios-master\.github\ISSUE_TEMPLATE\---bug-report.md" />
+    <Content Include="axios-master\.github\ISSUE_TEMPLATE\---documentation.md" />
+    <Content Include="axios-master\.github\ISSUE_TEMPLATE\---support-or-usage-question.md" />
+    <Content Include="axios-master\.github\ISSUE_TEMPLATE\--feature-request.md" />
+    <Content Include="axios-master\.github\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include="axios-master\.npmignore" />
+    <Content Include="axios-master\.travis.yml" />
+    <Content Include="axios-master\bower.json" />
+    <Content Include="axios-master\CHANGELOG.md" />
+    <Content Include="axios-master\CODE_OF_CONDUCT.md" />
+    <Content Include="axios-master\COLLABORATOR_GUIDE.md" />
+    <Content Include="axios-master\CONTRIBUTING.md" />
+    <Content Include="axios-master\COOKBOOK.md" />
+    <Content Include="axios-master\dist\axios.map" />
+    <Content Include="axios-master\dist\axios.min.map" />
+    <Content Include="axios-master\ECOSYSTEM.md" />
+    <Content Include="axios-master\examples\README.md" />
+    <Content Include="axios-master\lib\adapters\README.md" />
+    <Content Include="axios-master\lib\core\README.md" />
+    <Content Include="axios-master\lib\helpers\README.md" />
+    <Content Include="axios-master\LICENSE" />
+    <Content Include="axios-master\package.json" />
+    <Content Include="axios-master\README.md" />
+    <Content Include="axios-master\test\manual\fixture.json" />
+    <Content Include="axios-master\UPGRADE_GUIDE.md" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\ElementUI\element-ui.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -516,6 +636,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\vue.js" />
+    <Content Include="Scripts\vue.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -532,14 +654,23 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UserInfo\Login.cshtml" />
     <Content Include="Views\UserInfo\AddUser.cshtml" />
-    <Content Include="Views\News\AddNews.cshtml" />
-    <Content Include="Views\News\ShowNews.cshtml" />
-    <Content Include="Views\News\UptNews.cshtml" />
+    <Content Include="Views\UserInfo\ShowAdmin.cshtml" />
+    <Content Include="Views\UserInfo\ShowCommon.cshtml" />
+    <Content Include="Views\UserInfo\MyPage.cshtml" />
+    <Content Include="Views\UserInfo\UpdPwd.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\UserInfo\ShowSomeOne.cshtml" />
+    <Content Include="Views\SceneryHoliday\Index.cshtml" />
+    <Content Include="Views\SceneryHoliday\AddScenery.cshtml" />
+    <Content Include="Views\SceneryHoliday\AddHoliday.cshtml" />
+    <Content Include="Views\SceneryHoliday\ShowScenery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AirTicket\" />
+    <Folder Include="Views\News\" />
     <Folder Include="Views\Order\" />
+    <Folder Include="Views\UserInfo\" />
     <Folder Include="Views\SceneryHoliday\" />
   </ItemGroup>
   <ItemGroup>
@@ -555,11 +686,19 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="axios-master\index.d.ts" />
+    <TypeScriptCompile Include="axios-master\test\typescript\axios.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
