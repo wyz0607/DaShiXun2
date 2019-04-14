@@ -17,7 +17,7 @@ namespace TravelMVC.Controllers
             client.BaseAddress = uri;
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage sponse = null;
-            switch(methed)
+            switch(methed.ToLower())
             {
                 case "get":
                     sponse = client.GetAsync(apimethed).Result;

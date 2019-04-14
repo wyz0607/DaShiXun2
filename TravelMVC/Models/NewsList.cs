@@ -14,7 +14,8 @@ namespace TravelMVC.Models
         public int N_Category { get; set; }
         public string N_Content { get; set; }
         public string N_DateTime { get; set; }
-   
+        public string N_Name { get; set; }
+
 
     }
 }
