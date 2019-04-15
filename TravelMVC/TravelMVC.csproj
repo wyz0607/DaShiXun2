@@ -664,14 +664,16 @@
     <Content Include="Views\SceneryHoliday\AddScenery.cshtml" />
     <Content Include="Views\SceneryHoliday\AddHoliday.cshtml" />
     <Content Include="Views\SceneryHoliday\ShowScenery.cshtml" />
+    <Content Include="Views\SceneryHoliday\AddNews.cshtml" />
+    <Content Include="Views\SceneryHoliday\ShowNews.cshtml" />
+    <Content Include="Views\SceneryHoliday\UptNews.cshtml" />
+    <Content Include="Views\SceneryHoliday\ShowParticipation.cshtml" />
+    <Content Include="Views\SceneryHoliday\ShowHoliday.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AirTicket\" />
     <Folder Include="Views\News\" />
-    <Folder Include="Views\Order\" />
-    <Folder Include="Views\UserInfo\" />
-    <Folder Include="Views\SceneryHoliday\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -3,7 +3,7 @@
     ViewBag.Title = "AddScenery";
 }
 
-<h2>AddScenery</h2>
+<h2 style="width:200px;margin:0 auto">添加景点</h2>
 <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
 <script src="~/Scripts/vue.js"></script>
 <script src="~/Scripts/ElementUI/element-ui.js"></script>
@@ -11,31 +11,27 @@
 
 
 <div id='app'>
+    
     <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="景点名称">
             <el-input v-model="form.S_Name"></el-input>
         </el-form-item>
-        <el-form-item label="省">
-            <el-select v-model="form.S_Genus_Prov" @@change="DuoJi" placeholder="请选择活动区域">
-                    <el-option v-for="item in Prov"
-                               :key="item.R_Id"
-                               :label="item.R_Name"
-                               :value="item.R_Id"
-                               >
-                    </el-option>
+        <el-form-item label="所在地">
+            <el-select v-model="form.S_Genus_Prov" @@change="DuoJi" placeholder="请选择所在省">
+                <el-option v-for="item in Prov"
+                           :key="item.R_Id"
+                           :label="item.R_Name"
+                           :value="item.R_Id">
+                </el-option>
             </el-select>
-        </el-form-item>
-        <el-form-item label="市">
-            <el-select v-model="form.S_Genus_City" @@change="DuoJi1" placeholder="请选择活动区域">
+            <el-select v-model="form.S_Genus_City" @@change="DuoJi1" placeholder="请选择所在市">
                 <el-option v-for="item in City"
                            :key="item.R_Id"
                            :label="item.R_Name"
                            :value="item.R_Id">
                 </el-option>
             </el-select>
-        </el-form-item>
-        <el-form-item label="县">
-            <el-select v-model="form.S_Genus_Coun" placeholder="请选择活动区域">
+            <el-select v-model="form.S_Genus_Coun" placeholder="请选择所在区">
                 <el-option v-for="item in Coun"
                            :key="item.R_Id"
                            :label="item.R_Name"
@@ -43,7 +39,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="等级">
-            <el-select v-model="form.S_Level" placeholder="请选择活动区域">
+            <el-select v-model="form.S_Level" placeholder="请选择景点等级">
                 <el-option label="5A" value="5A"></el-option>
                 <el-option label="4A" value="4A"></el-option>
                 <el-option label="3A" value="3A"></el-option>
@@ -52,7 +48,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="景区类型">
-            <el-select v-model="form.S_Type" placeholder="请选择活动区域">
+            <el-select v-model="form.S_Type" placeholder="请选择景区类型">
                 <el-option v-for="item in Type"
                            :key="item.S_Id"
                            :label="item.S_Name"
@@ -69,21 +65,18 @@
         <el-form-item label="介绍">
             <el-input type="textarea" v-model="form.S_Introduction"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="景点图片">
             <el-upload action="/SceneryHoliday/AddPhoto"
                        list-type="picture-card"
                        :on-preview="handlePictureCardPreview"
                        :on-remove="handleRemove"
-                       name="file"
-                       >
+                       name="file">
                 <i class="el-icon-plus"></i>
             </el-upload>
             <el-dialog :visible.sync="dialogVisible" size="tiny">
                 <img width="100%" :src="form.S_Photo" alt="">
             </el-dialog>
         </el-form-item>
-
-
         <el-form-item>
             <el-button type="primary" @@click="onSubmit">立即创建</el-button>
             <el-button>取消</el-button>
@@ -102,11 +95,11 @@
                 Coun:[],
                 form: {
                     S_Name: '',
-                    S_Genus_Prov: 1,
+                    S_Genus_Prov: '',
                     S_Genus_City: '',
                     S_Genus_Coun: '',
                     S_Level: '',
-                    S_Type: 1,
+                    S_Type: '',
                     S_Fit: '',
                     S_Price: '',
                     S_Introduction: '',

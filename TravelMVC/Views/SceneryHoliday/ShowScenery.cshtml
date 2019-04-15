@@ -12,19 +12,23 @@
     <template>
         <el-table :data="tableData"
                   style="width: 100%">
+            <el-table-column prop="S_Id"
+                             label="景点编号"
+                             width="90">
+            </el-table-column>
             <el-table-column prop="S_Name"
                              label="景点名称"
                              width="90">
             </el-table-column>
-            <el-table-column prop="S_Genus_Prov"
+            <el-table-column prop="Prov1"
                              label="省"
                              width="90">
             </el-table-column>
-            <el-table-column prop="S_Genus_City"
+            <el-table-column prop="City1"
                              label="市"
                              width="90">
             </el-table-column>
-            <el-table-column prop="S_Genus_Coun"
+            <el-table-column prop="Coun1"
                              label="县"
                              width="90">
             </el-table-column>
@@ -32,16 +36,12 @@
                              label="等级"
                              width="90">
             </el-table-column>
-            <el-table-column prop="S_Type"
+            <el-table-column prop="Type"
                              label="类型"
                              width="90">
             </el-table-column>
             <el-table-column prop="S_Fit"
                              label="适合"
-                             width="90">
-            </el-table-column>
-            <el-table-column prop="S_Grade"
-                             label="评分"
                              width="90">
             </el-table-column>
             <el-table-column prop="S_Price"
@@ -60,14 +60,7 @@
                     <el-button type="primary" icon="el-icon-edit" circle @@click="updateShow(scope.row,scope.$index)"></el-button>
                     <!--弹出层修改-->
                     <!--带提示的删除-->
-                    <el-popover placement="right" title="删除提示" width="200" trigger="click" v-model="scope.row.visible2">
-                        <div>确认删除吗？</div>
-                        <el-button size="mini" @@click='scope.row.visible2=false'>取消</el-button>
-                        <el-button size="mini" @@click='del(scope.$index,scope.row)'>删除</el-button>
-
-                        <el-button slot="reference" type="danger" icon="el-icon-delete" circle></el-button>
-
-                    </el-popover>
+                    <el-button slot="reference" type="danger" @@click="del(scope.row.S_Id,scope.$index)" icon="el-icon-delete" circle></el-button>
 
                     <!--带提示的删除-->
                 </template>
@@ -78,7 +71,7 @@
         <!--修改表单-->
         <el-dialog title="提示"
                    :visible.sync="dialogVisible"
-                   width="40%"
+                   width="60%"
                    :before-close="handleClose">
             <span>修改窗口</span>
             <span slot="footer" class="dialog-footer">
@@ -87,7 +80,7 @@
                     <el-form-item label="景点名称">
                         <el-input v-model="updData.S_Name"></el-input>
                     </el-form-item>
-                    <el-form-item label="省">
+                    <el-form-item label="所在地">
                         <el-select v-model="updData.S_Genus_Prov" @@change="DuoJi" placeholder="请选择活动区域">
                             <el-option v-for="item in Prov"
                                        :key="item.R_Id"
@@ -95,8 +88,6 @@
                                        :value="item.R_Id">
                             </el-option>
                         </el-select>
-                    </el-form-item>
-                    <el-form-item label="市">
                         <el-select v-model="updData.S_Genus_City" @@change="DuoJi1" placeholder="请选择活动区域">
                             <el-option v-for="item in City"
                                        :key="item.R_Id"
@@ -104,8 +95,6 @@
                                        :value="item.R_Id">
                             </el-option>
                         </el-select>
-                    </el-form-item>
-                    <el-form-item label="县">
                         <el-select v-model="updData.S_Genus_Coun" placeholder="请选择活动区域">
                             <el-option v-for="item in Coun"
                                        :key="item.R_Id"
@@ -139,18 +128,6 @@
                     </el-form-item>
                     <el-form-item label="介绍">
                         <el-input type="textarea" v-model="updData.S_Introduction"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-upload action="/SceneryHoliday/AddPhoto"
-                                   list-type="picture-card"
-                                   :on-preview="handlePictureCardPreview"
-                                   :on-remove="handleRemove"
-                                   name="file">
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
-                        <el-dialog :visible.sync="dialogVisible1" size="tiny">
-                            <img width="100%" :src="updData.S_Photo" alt="">
-                        </el-dialog>
                     </el-form-item>
 
                     <el-form-item>
@@ -187,7 +164,7 @@
             },
             created: function () {
                 var self = this;
-                axios.get('http://localhost:61521/api/SceneryHolidayApi/ShowScenery').then(function (res) {
+                axios.get('http://localhost:61521/api/SceneryHolidayApi/ShowAllScenery').then(function (res) {
                     console.log(res.data);
                     self.tableData = res.data;
                 }).catch(function (err) {
@@ -206,8 +183,8 @@
                     this.dialogVisible1 = true;
                 },
                 DuoJi(n) {
-                    this.tableData.S_Genus_City = '';
-                    this.tableData.S_Genus_Coun = '';
+                    this.updData.S_Genus_City = '';
+                    this.updData.S_Genus_Coun = '';
                     var self = this;
                     axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + n).then(function (res) {
                         self.City = res.data;
@@ -218,7 +195,7 @@
                     })
                 },
                 DuoJi1(n) {
-                    this.tableData.S_Genus_Coun = '';
+                    this.updData.S_Genus_Coun = '';
                     var self = this;
                     axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + n).then(function (res) {
                         self.Coun = res.data;
@@ -229,13 +206,35 @@
                     })
                 },
                 //删除数据
-                del: function (index, row) {
+                del: function (id, index) {
                     //移除数组指定位置的数据
-                    this.tableData.splice(index, 1);
                     //发送ajax请求 删除数据库数据
+                    this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        console.log(id);
+                        this.tableData.splice(index, 1);
+                        var self = this;
+                        axios.get("/SceneryHoliday/DelScenery?S_Id=" + id).then(function (res) {
+                            self.$message({
+                                type: 'success',
+                                message: res.data
+                            });
+                        })
+                            .catch(function (err) {
+                                console.log(err.data);
+                            })
 
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
                     //隐藏提示框
-                    row.visible2 = false;
+
                 }, handleClose(done) {
                     this.$confirm('确认关闭？')
                         .then(_ => {
@@ -278,15 +277,20 @@
                     }).catch(function (err) {
                         console.log(err);
                         console.log(err.data)
-                    })
-                    
+                        })
+                   
                     //显示修改表单
                     this.dialogVisible = true;
                 },
                 saveData: function () {
                     console.log(this.updData);
                     //发送ajax请求 修改数据
-
+                    var self = this;
+                    axios.post("/SceneryHoliday/UptScenery", this.updData).then(function (res) {
+                        console.log(res.data);
+                    }).catch(function (err) {
+                        console.log(err.data)
+                    })
                     //隐藏修改表单
                     this.dialogVisible = false;
                 },
