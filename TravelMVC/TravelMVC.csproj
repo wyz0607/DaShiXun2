@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -669,9 +669,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\AirTicket\" />
     <Folder Include="Views\News\" />
-    <Folder Include="Views\Order\" />
-    <Folder Include="Views\UserInfo\" />
-    <Folder Include="Views\SceneryHoliday\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
