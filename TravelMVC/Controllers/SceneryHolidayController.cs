@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TravelMVC.Models;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace TravelMVC.Controllers
 {
@@ -28,6 +29,17 @@ namespace TravelMVC.Controllers
             }
             return View();
         }
+        public string Upload(HttpPostedFileBase file)
+        {
+            string Name = file.FileName;
+            string FileName = Server.MapPath("~/Upload");
+            if (!Directory.Exists(FileName))
+            {
+                Directory.CreateDirectory(FileName);
+            }
+            file.SaveAs(Path.Combine(FileName, Name));
+            return JsonConvert.SerializeObject(new { path = "~/Upload/" + file.FileName, code = 0 });
+        }
         [HttpGet]
         public ActionResult AddScenery()
         {
@@ -50,8 +62,7 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult ShowScenery()
         {
-            string json=HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowScenery",null);
-            return View(JsonConvert.DeserializeObject<List<Scenery>>(json));
+            return View();
         }
         [HttpGet]
         public ActionResult AddHoliday()
@@ -73,16 +84,53 @@ namespace TravelMVC.Controllers
             }
         }
         [HttpGet]
+        public ActionResult DelScenery(int S_Id)
+        {
+            string result = HttpClientHelper.Send("delete", "api/SceneryHolidayApi/DelScenery?S_Id=" + S_Id, null);
+            if (result.Contains("成功"))
+            {
+                return Content("删除成功");
+            }
+            else
+            {
+                return Content("删除失败");
+            }
+        }
+        [HttpPost]
+        public ActionResult UptScenery(Scenery scenery)
+        {
+            string result = HttpClientHelper.Send("put", "api/SceneryHolidayApi/UptScenery", JsonConvert.SerializeObject(scenery));
+            if (result.Contains("成功"))
+            {
+                return Content("修改成功");
+            }
+            else
+            {
+                return Content("修改失败");
+            }
+        }
+        [HttpGet]
         public ActionResult ShowHoliday()
         {
-            string json = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowHoliday",null);
-            return View(JsonConvert.DeserializeObject<List<Holiday>>(json));
+            return View();
         }
         [HttpGet]
         public ActionResult ShowParticipation()
         {
-            string json = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowParticipation", null);
-            return View(JsonConvert.DeserializeObject<List<Participation>>(json));
+            return View();
+        }
+        [HttpGet]
+        public ActionResult DelParticipation(int P_Id)
+        {
+            string result = HttpClientHelper.Send("delete", "api/SceneryHolidayApi/DelParticipation?P_Id=" + P_Id, null);
+            if (result.Contains("成功"))
+            {
+                return Content("删除成功");
+            }
+            else
+            {
+                return Content("删除失败");
+            }
         }
     }
 }

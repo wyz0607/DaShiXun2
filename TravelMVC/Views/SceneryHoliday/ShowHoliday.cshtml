@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "ShowHoliday";
+}
+
+<h2>ShowHoliday</h2>
+<link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
+<script src="~/Scripts/vue.js"></script>
+<script src="~/Scripts/ElementUI/element-ui.js"></script>
+<script src="~/axios-master/dist/axios.js"></script>
+<div id='app'>
+    <template>
+        <el-table :data="tableData"
+                  style="width: 100%">
+            <el-table-column prop="H_Id"
+                             label="度假村编号"
+                             width="90">
+            </el-table-column>
+            <el-table-column prop="H_Theme"
+                             label="度假主题"
+                             width="200">
+            </el-table-column>
+            <el-table-column prop="H_Destination"
+                             label="目的地"
+                             width="90">
+            </el-table-column>
+            <el-table-column prop="H_RetailPrice"
+                             label="折前票价"
+                             width="90">
+            </el-table-column>
+            <el-table-column prop="H_FormerPrice"
+                             label="折后票价"
+                             width="90">
+            </el-table-column>
+            <el-table-column prop="H_Data"
+                             label="出发日期"
+                             width="160">
+            </el-table-column>
+            <el-table-column prop="H_Traffic"
+                             label="往返交通">
+            </el-table-column>
+            <el-table-column prop="H_TravelDays"
+                             label="天数"
+                             width="90">
+            </el-table-column>
+            <el-table-column prop="H_Participant"
+                             label="参与者"
+                             width="160">
+            </el-table-column>
+            <el-table-column label="行程说明">
+                <template slot-scope="scope">
+                    <el-button type="primary" icon="el-icon-share" circle @@click="show(scope.$index)"></el-button>
+                    <el-dialog title="提示"
+                               :visible.sync="dialogVisible"
+                               width="30%"
+                               :before-close="handleClose">
+                        <span>{{beforeDate}}</span>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @@click="dialogVisible=false">取 消</el-button>
+                            <el-button type="primary" @@click="dialogVisible=false">确 定</el-button>
+                        </span>
+                    </el-dialog>
+                </template>
+            </el-table-column>
+        </el-table>
+
+    </template>
+
+
+</div>
+
+
+<script>
+    window.onload = function () {
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dialogVisible1: false,
+                Type: [],
+                Prov: [],
+                City: [],
+                Coun: [],
+                tableData: [],//列表数据
+                dialogVisible: false,//修改提示框显示开关
+                visible2: false,//删除提示框显示开关
+                beforeDate: '',//修改前数据
+                updIndex: -1,//修改的数据索引
+                updData: {}//修改表单反填数据
+            },
+            created: function () {
+                var self = this;
+                axios.get('http://localhost:61521/api/SceneryHolidayApi/ShowHoliday').then(function (res) {
+                    console.log(res.data);
+                    self.tableData = res.data;
+                }).catch(function (err) {
+                    console.log(err.data)
+                })
+                //显而易见 这里应该发送ajax初始化数据的 axios.get
+            },
+            methods: {
+                show: function (Id) { 
+                    console.log(this.tableData[Id].H_Explain)
+                    this.beforeDate = this.tableData[Id].H_Explain
+                    this.dialogVisible = true
+                },
+                handleClose(done) {
+                    this.$confirm('确认关闭？')
+                        .then(_ => {
+                            done();
+                        })
+                        .catch(_ => { });
+                }
+            
+            }
+        })
+    }
+</script>
