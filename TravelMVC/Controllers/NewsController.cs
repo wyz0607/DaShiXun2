@@ -35,7 +35,7 @@ namespace TravelMVC.Controllers
                 string path = Server.MapPath("/Images/");
                 string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + img.FileName;
                 img.SaveAs(path + fileName);
-                sce.N_Photo = "http://localhost:61521/Images/" + fileName;
+                sce.N_Photo = "http://localhost:54970/Images/" + fileName;
             }
 
             string strJson = JsonConvert.SerializeObject(sce);
