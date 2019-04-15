@@ -7,7 +7,7 @@ namespace TravelMVC.Models
 {
     public class Newstype
     {
-        public int N_Id { get; set; }
+        public int T_Id { get; set; }
         public string N_Name { get; set; }
     }
 }
