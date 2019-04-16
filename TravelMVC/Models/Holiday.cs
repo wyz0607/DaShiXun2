@@ -11,12 +11,12 @@ namespace TravelMVC.Models
         public string H_Theme { get; set; }
         public string H_Destination { get; set; }
         public double H_RetailPrice { get; set; }
-        public double H_ChildPrice { get; set; }
-        public double H_StudentPrice { get; set; }
+        public double H_FormerPrice { get; set; }
         public string H_Data { get; set; }
         public string H_Traffic { get; set; }
         public int H_TravelDays { get; set; }
         public string H_Participant { get; set; }
         public string H_Explain { get; set; }
+        public string H_Photo { get; set; }
     }
 }

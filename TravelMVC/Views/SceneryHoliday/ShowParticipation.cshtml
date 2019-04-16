@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "ShowParticipation";
+}
+
+<h2>ShowParticipation</h2>
+<link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
+<script src="~/Scripts/vue.js"></script>
+<script src="~/Scripts/ElementUI/element-ui.js"></script>
+<script src="~/axios-master/dist/axios.js"></script>
+<div id='app'>
+    <template>
+        <el-table :data="tableData"
+                  style="width: 100%">
+            <el-table-column prop="P_Id"
+                             label="跟团编号"
+                             width="90">
+            </el-table-column>
+            <el-table-column prop="Loc"
+                             label="地区"
+                             width="200">
+            </el-table-column>
+            <el-table-column prop="Name"
+                             label="名称"
+                             width="90">
+            </el-table-column>
+            <el-table-column prop="Phone"
+                             label="电话"
+                             width="160">
+            </el-table-column>
+            <el-table-column prop="H_Date"
+                             label="日期"
+                             width="200">
+            </el-table-column>
+            <el-table-column prop="H_TravelDays"
+                             label="天数"
+                             width="90">
+            </el-table-column>
+            <el-table-column prop="H_Theme"
+                             label="主题"
+                             width="160">
+            </el-table-column>
+            <el-table-column prop="H_Traffic"
+                             label="交通方式">
+            </el-table-column>
+
+            <el-table-column label="操作">
+
+                <template slot-scope="scope">
+                    <!--弹出层修改-->
+                    <!--弹出层修改-->
+                    <!--带提示的删除-->
+                    <el-button slot="reference" type="danger" @@click="del(scope.row.P_Id,scope.$index)" icon="el-icon-delete" circle></el-button>
+
+                    <!--带提示的删除-->
+                </template>
+
+            </el-table-column>
+        </el-table>
+
+    </template>
+
+
+</div>
+
+
+<script>
+    window.onload = function () {
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dialogVisible1: false,
+                Type: [],
+                Prov: [],
+                City: [],
+                Coun: [],
+                tableData: [],//列表数据
+                dialogVisible: false,//修改提示框显示开关
+                visible2: false,//删除提示框显示开关
+                beforeDate: '',//修改前数据
+                updIndex: -1,//修改的数据索引
+                updData: {}//修改表单反填数据
+            },
+            created: function () {
+                var self = this;
+                axios.get('http://localhost:61521/api/SceneryHolidayApi/ShowAllParticipation').then(function (res) {
+                    console.log(res.data);
+                    self.tableData = res.data;
+                }).catch(function (err) {
+                    console.log(err.data)
+                })
+                //显而易见 这里应该发送ajax初始化数据的 axios.get
+            },
+            methods: {
+                del: function (id, index) {
+                    //移除数组指定位置的数据
+                    //发送ajax请求 删除数据库数据
+                    this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        console.log(id);
+                        this.tableData.splice(index, 1);
+                        var self = this;
+                        axios.get("/SceneryHoliday/DelParticipation?P_Id=" + id).then(function (res) {
+                            self.$message({
+                                type: 'success',
+                                message: res.data
+                            });
+                        })
+                            .catch(function (err) {
+                                console.log(err.data);
+                            })
+
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
+                    //隐藏提示框
+
+                }
+            }
+        })
+    }
+</script>
+

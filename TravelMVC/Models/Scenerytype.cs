@@ -8,6 +8,6 @@ namespace TravelMVC.Models
     public class Scenerytype
     {
         public int S_Id { get; set; }
-        public string S_Name { get; set; }
+        public string T_Name { get; set; }
     }
 }

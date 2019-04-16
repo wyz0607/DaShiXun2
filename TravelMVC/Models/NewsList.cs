@@ -15,6 +15,7 @@ namespace TravelMVC.Models
         public string N_Content { get; set; }
         public string N_DateTime { get; set; }
         public string N_Name { get; set; }
+        public string  N_Photo { get; set; }
 
 
     }

@@ -1,53 +1,88 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    Layout = null;
 }
 
-<h2>Index</h2>
-<div id='app'>
-    <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="活动名称">
-            <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域">
-            <el-select v-model="form.region" placeholder="请选择活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="活动时间">
-            <el-col :span="11">
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-                <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-            </el-col>
-        </el-form-item>
-        <el-form-item label="即时配送">
-            <el-switch v-model="form.delivery"></el-switch>
-        </el-form-item>
-        <el-form-item label="活动性质">
-            <el-checkbox-group v-model="form.type">
-                <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-                <el-checkbox label="地推活动" name="type"></el-checkbox>
-                <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-                <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-            </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="特殊资源">
-            <el-radio-group v-model="form.resource">
-                <el-radio label="线上品牌商赞助"></el-radio>
-                <el-radio label="线下场地免费"></el-radio>
-            </el-radio-group>
-        </el-form-item>
-        <el-form-item label="活动形式">
-            <el-input type="textarea" v-model="form.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @@click="onSubmit">立即创建</el-button>
-            <el-button>取消</el-button>
-        </el-form-item>
-    </el-form>
-</div>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/layui/layui.js"></script>
+</head>
+<body>
+    <div>
+        <form action="/" method="post">
+            <div class="layui-upload">
+                <button class="layui-btn" id="test1" type="button">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" style="width:100px;height:100px;display:none;" id="demo1">
+                    <p id="demoText"></p>
+                </div>
+            </div>
+        </form>
+        <script>
+            layui.use('upload', function () {
+                var upload = layui.upload;
+
+                //执行实例
+                var uploadInst = upload.render({
+                    elem: '#test1' //绑定元素
+                    , url: '/SceneryHoliday/Upload' //上传接口
+                    , before: function (obj) {
+                        //预读本地文件示例，不支持ie8
+                        obj.preview(function (index, file, result) {
+                            $('#demo1').attr('src', result); //图片链接（base64）
+                        });
+                    }
+                    , done: function (res) {
+                        //上传完毕回调
+                        if (res.code == 0) {
+                            alert("成功")
+                        }
+                    }
+                    , error: function () {
+                        //请求异常回调
+                        alert("失败")
+                    }
+                });
+            });
+        </script>
+        <div class="layui-upload-drag" name="file" id="test10">
+            <i class="layui-icon" name="file"></i>
+            <p name="file">点击上传，或将文件拖拽到此处</p>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    //拖拽上传
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        upload.render({
+            elem: '#test10' //绑定元素
+            , url: '/SceneryHoliday/Upload' //上传接口
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').css('display', 'block'); //图片链接（base64）
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //上传完毕回调
+                if (res.code == 0) {
+                    alert("成功")
+                }
+            }
+            , error: function () {
+                //请求异常回调
+                alert("失败")
+            }
+        });
+    })
+</script>
