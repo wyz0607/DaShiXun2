@@ -9,10 +9,19 @@
     <table style="margin:50px auto" class="layui-table" lay-skin="line">
 
         <tr>
+            <td style="width:200px;">图片：</td>
+            <td>
+                <div class="layui-input-block">
+                    <input id="File1" type="file" name="img" />
+                </div>
+            </td>
+        </tr>
+
+        <tr>
             <td style="width:200px;">新闻类型：</td>
             <td>
                 <div class="layui-input-inline">
-                    @Html.DropDownList("N_TypeId",ViewBag.slist as SelectList,"请选择")  
+                    @Html.DropDownList("N_TypeId", ViewBag.slist as SelectList, "请选择")
 
                 </div>
             </td>

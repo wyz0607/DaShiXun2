@@ -10,65 +10,77 @@
 <form class="layui-form" action="/News/UptNews" enctype="multipart/form-data" method="post">
     @foreach (var item in Model)
     {
-        <table style="margin:50px auto" class="layui-table" lay-skin="line">
-
-            <tr>
-                <td style="width:200px;">新闻类型：</td>
-                <td>
-                    <div class="layui-input-inline">
-                        @Html.DropDownList("N_TypeId", ViewBag.slist as SelectList, item.N_Name.ToString())
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:200px;">新闻标题：</td>
-                <td>
-                    <div class="layui-input-inline">
-                        <input type="text" name="N_MainTitle" value="@item.N_MainTitle" lay-verify="title" autocomplete="off" class="layui-input">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:200px;">作者：</td>
-                <td>
-                    <div class="layui-input-inline">
-                        <input type="text" name="N_Author" value="@item.N_Author" lay-verify="title" autocomplete="off" class="layui-input">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:200px;">分数:</td>
-                <td>
-                    <div class="layui-input-inline">
-                        <input type="text" name="N_Category" value="@item.N_Category"  lay-verify="title" autocomplete="off" class="layui-input">
-                    </div>
-                </td>
-            </tr>
+    <table style="margin:50px auto" class="layui-table" lay-skin="line">
+        <tr>
+            <td style="width:200px;">图片：</td>
+            <td>
+                <div class="layui-input-block">
+                    <img src="@item.N_Photo" alt="Alternate Text" style="width:80px;height:80px;" />
+                    <!--不选择新图片时 旧图片的路径再返还给Controller-->
+                    @Html.Hidden("model => model.N_Photo")
+                    <input id="File1" type="file" name="img" />
+                </div>
+            </td>
+        </tr>
 
 
-            <tr>
-                <td style="width:200px;">内容</td>
-                <td>
-                    <div class="layui-input-block">
-                        <input type="text" name="N_Content" value="@item.N_Content"  lay-verify="title" placeholder="请输入内容" class="layui-input" style="margin-left:-110px;">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:200px;">日期:</td>
-                <td>
-                    <div class="layui-input-inline">
-                        <input type="text" name="N_Datetime" value="@item.N_DateTime"  id="date1" autocomplete="off" class="layui-input">
-                    </div>
-                </td>
-            </tr>
+        <tr>
+            <td style="width:200px;">新闻类型：</td>
+            <td>
+                <div class="layui-input-inline">
+                    @Html.DropDownList("N_TypeId", ViewBag.slist as SelectList, item.N_Name.ToString())
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:200px;">新闻标题：</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="text" name="N_MainTitle" value="@item.N_MainTitle" lay-verify="title" autocomplete="off" class="layui-input">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:200px;">作者：</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="text" name="N_Author" value="@item.N_Author" lay-verify="title" autocomplete="off" class="layui-input">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:200px;">分数:</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="text" name="N_Category" value="@item.N_Category" lay-verify="title" autocomplete="off" class="layui-input">
+                </div>
+            </td>
+        </tr>
 
-            <tr>
-                <td colspan="2">
-                    <button class="layui-btn" type="submit"   lay-submit="" lay-filter="demo1" style="margin-left:146px;">保存</button>
-                </td>
-            </tr>
-        </table>
+
+        <tr>
+            <td style="width:200px;">内容</td>
+            <td>
+                <div class="layui-input-block">
+                    <input type="text" name="N_Content" value="@item.N_Content" lay-verify="title" placeholder="请输入内容" class="layui-input" style="margin-left:-110px;">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:200px;">日期:</td>
+            <td>
+                <div class="layui-input-inline">
+                    <input type="text" name="N_Datetime" value="@item.N_DateTime" id="date1" autocomplete="off" class="layui-input">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button class="layui-btn" type="submit" lay-submit="" lay-filter="demo1" style="margin-left:146px;">保存</button>
+            </td>
+        </tr>
+    </table>
     }
 </form>
 <script>
