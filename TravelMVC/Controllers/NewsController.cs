@@ -16,6 +16,7 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult AddNews()
         {
+       
             string result = HttpClientHelper.Send("get", "api/NewsApi/ShowNewTypes", null);
             var ntype = JsonConvert.DeserializeObject<List<Newstype>>(result);
             SelectList slist = new SelectList(ntype, "T_Id", "N_Name");
@@ -24,8 +25,19 @@ namespace TravelMVC.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddNews(NewsList sce)
+        public ActionResult AddNews(NewsList sce, HttpPostedFileBase img)
         {
+
+            //判断是否有图片上传
+            if (img != null)
+            {
+                //获取images绝对路径
+                string path = Server.MapPath("/Images/");
+                string fileName = DateTime.Now.ToString("yyyyMMddhhmmss") + img.FileName;
+                img.SaveAs(path + fileName);
+                sce.N_Photo = "http://localhost:54970/Images/" + fileName;
+            }
+
             string strJson = JsonConvert.SerializeObject(sce);
             string result = HttpClientHelper.Send("post", "api/NewsApi/AddNews", strJson);
             if (result.Contains("成功"))
@@ -101,8 +113,17 @@ namespace TravelMVC.Controllers
             return View(list);
         }
         [HttpPost]
-        public ActionResult UptNews(NewsList kit)
+        public ActionResult UptNews(NewsList kit, HttpPostedFileBase img)
         {
+
+            if (img != null)//需要更换图片时
+            {
+                string path = Server.MapPath("/Images/");
+                string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + img.FileName;
+                img.SaveAs(path + filename);
+                kit.N_Photo = "http://localhost:61521/Images/" + filename;
+            }
+
             kit.N_Id = Convert.ToInt32(Session["id"]);
             string jsonstr = JsonConvert.SerializeObject(kit);
             string str = HttpClientHelper.Send("post", "api/NewsApi/UptNews", jsonstr);

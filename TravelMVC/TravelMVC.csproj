@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -375,6 +375,7 @@
     <Content Include="Images\女头.png" />
     <Content Include="Images\女用户.png" />
     <Content Include="Images\未知.png" />
+    <Content Include="Images\李嘉诚.PNG" />
     <Content Include="Images\男.png" />
     <Content Include="Images\男头.png" />
     <Content Include="Images\男用户.png" />

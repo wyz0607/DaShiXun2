@@ -24,6 +24,7 @@
     </colgroup>
     <thead>
         <tr>
+            <th>图片</th>
             <th>新闻编号</th>
             <th>新闻类型</th>
             <th style="width:100px;">新闻标题</th>
@@ -39,6 +40,9 @@
     {
         <tbody Name="tr1">
             <tr>
+                <td>
+                    <img src="@item.N_Photo" style="width:300px;height:100px;" alt="">
+                </td>
                 <td>@item.N_Id</td>
                 <td>@item.N_Name</td>
                 <td>@item.N_MainTitle</td>
