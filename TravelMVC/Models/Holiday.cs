@@ -21,5 +21,9 @@ namespace TravelMVC.Models
         public int H_Num { get; set; }
         public string H_Route { get; set; }
         public string H_ProFeature { get; set; }
+        public string H_Pickpoint { get; set; }
+        public string H_RouteName { get; set; }
+        public string H_RouteCircuit { get; set; }
+        public string H_TravelTime { get; set; }
     }
 }
