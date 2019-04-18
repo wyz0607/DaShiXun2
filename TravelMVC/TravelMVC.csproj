@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -361,6 +361,23 @@
     <Content Include="fonts\materialdesignicons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\20190412042020u=3034239582,852516614&amp;fm=27&amp;gp=0.jpg" />
+    <Content Include="Images\20190412042931u=490106030,528080948&amp;fm=200&amp;gp=0.jpg" />
+    <Content Include="Images\20190414061844timg.jpg" />
+    <Content Include="Images\20190414062032timg.jpg" />
+    <Content Include="Images\20190414063514timg.jpg" />
+    <Content Include="Images\20190414093508timg.jpg" />
+    <Content Include="Images\20190414093651timg.jpg" />
+    <Content Include="Images\20190414094013timg.jpg" />
+    <Content Include="Images\20190415084125300g0r000000gzcsb4EC5_C_350_170_Q90.jpg" />
+    <Content Include="Images\20190415090220李嘉诚.PNG" />
+    <Content Include="Images\20190415090742李嘉诚.PNG" />
+    <Content Include="Images\20190415091009李嘉诚.PNG" />
+    <Content Include="Images\20190415091345李嘉诚.PNG" />
+    <Content Include="Images\20190415092126李嘉诚.PNG" />
+    <Content Include="Images\20190415092629李嘉诚.PNG" />
+    <Content Include="Images\20190415094710微信图片_20181214181800.jpg" />
+    <Content Include="Images\activeHome.png" />
     <Content Include="Images\geRen.png" />
     <Content Include="Images\icon-.png" />
     <Content Include="Images\jingdian.png" />
@@ -370,6 +387,8 @@
     <Content Include="Images\user.png" />
     <Content Include="Images\xiayiye.png" />
     <Content Include="Images\xiu.png" />
+    <Content Include="Images\yonghuguanli.png" />
+    <Content Include="Images\zixun.png" />
     <Content Include="Images\删除.png" />
     <Content Include="Images\女.png" />
     <Content Include="Images\女头.png" />
@@ -379,8 +398,6 @@
     <Content Include="Images\男.png" />
     <Content Include="Images\男头.png" />
     <Content Include="Images\男用户.png" />
-    <Content Include="Images\yonghuguanli.png" />
-    <Content Include="Images\zixun.png" />
     <Content Include="js\bootstrap-colorpicker\bootstrap-colorpicker.js" />
     <Content Include="js\bootstrap-colorpicker\bootstrap-colorpicker.min.js" />
     <Content Include="js\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
@@ -781,7 +798,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\AirTicket\" />
-    <Folder Include="Views\News\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
