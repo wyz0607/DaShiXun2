@@ -60,6 +60,14 @@ namespace TravelMVC.Controllers
         {
             string result = HttpClientHelper.Send("get", "api/NewsApi/ShowNews", null);
             List<NewsList> sce = JsonConvert.DeserializeObject<List<NewsList>>(result);
+            foreach (var item in sce)
+            {
+                if (item.N_Content.Length > 50)
+                {
+                    item.N_Content = item.N_Content.Substring(0, 49) + "...";
+                }
+            }
+
             sList = sce;
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = sce.Count;
