@@ -58,7 +58,7 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult ShowNews(int pageindex = 1)
         {
-            string result = HttpClientHelper.Send("get", "api/NewsApi/ShowNews", null);
+            string result = HttpClientHelper.Send("get", "api/NewsApi/ShowNews");
             List<NewsList> sce = JsonConvert.DeserializeObject<List<NewsList>>(result);
             foreach (var item in sce)
             {
@@ -71,8 +71,9 @@ namespace TravelMVC.Controllers
             sList = sce;
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = sce.Count;
-            ViewBag.totalpage = Math.Round((sce.Count() * 1.0) / 6);
+            ViewBag.totalpage = Math.Ceiling((sce.Count() * 1.0) / 6);
             return View(sce.Skip((pageindex - 1) * 6).Take(6).ToList());
+        
 
         }
         //分页
@@ -88,15 +89,9 @@ namespace TravelMVC.Controllers
         //删除新闻
         public ActionResult DelNews(int id)
         {
-            string strId = id.ToString();
-            //string str = "";
-            //string[] ids = strId.Split(',');
-            //foreach (var item in ids)
-            //{
-            int result = Convert.ToInt32(HttpClientHelper.Send("delete", "api/NewsApi/DelNews?Id=" + strId));
-            //}
-
-            if (result>0)
+           
+            string result = HttpClientHelper.Send("delete", "api/NewsApi/DelNews?Id=" + id);
+            if (result.Contains("成功"))
             {
                 return Redirect("/News/ShowNews");
 
@@ -129,12 +124,12 @@ namespace TravelMVC.Controllers
                 string path = Server.MapPath("/Images/");
                 string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + img.FileName;
                 img.SaveAs(path + filename);
-                kit.N_Photo = "http://localhost:61521/Images/" + filename;
+                kit.N_Photo = "http://localhost:54970/Images/" + filename;
             }
 
             kit.N_Id = Convert.ToInt32(Session["id"]);
             string jsonstr = JsonConvert.SerializeObject(kit);
-            string str = HttpClientHelper.Send("post", "api/NewsApi/UptNews", jsonstr);
+            string str = HttpClientHelper.Send("put", "api/NewsApi/UptNews", jsonstr);
             if (str.Contains("成功"))
             {
                 return Redirect("/News/ShowNews");
@@ -146,4 +141,5 @@ namespace TravelMVC.Controllers
         }
 
     }
+   
 }
