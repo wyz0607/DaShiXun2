@@ -27,11 +27,13 @@
             <th>图片</th>
             <th>新闻编号</th>
             <th>新闻类型</th>
-            <th style="width:100px;">新闻标题</th>
+            <th >新闻标题</th>
             <th>作者</th>
             <th>分数</th>
             <th>内容</th>
-            <th style="width:200px;">日期</th>
+            <th >日期</th>
+            <th>点赞数</th>
+            <th>是否喜欢</th>
             <th style="width:200px;">操作</th>
 
         </tr>
@@ -50,6 +52,22 @@
                 <td>@item.N_Category</td>
                 <td>@item.N_Content</td>
                 <td>@item.N_DateTime</td>
+                <td>@item.N_Num</td>
+
+                <td>
+                    @{bool s = (bool)item.Is_Love;}
+
+                    @if (s = true)
+                    {
+                        <span>喜欢</span>
+                    }
+                    else
+                    {
+                        <span>不喜欢</span>
+                    }
+
+                </td>
+                
                 <td>
                     <button type="button" class="layui-btn layui-btn-warm" style="border-radius:4px 4px;border:none;width:60px;height:30px;line-height:30px" onclick="Upt(@item.N_Id)">修改</button>
 
