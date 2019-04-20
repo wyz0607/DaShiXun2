@@ -65,6 +65,35 @@ namespace TravelMVC.Controllers
             return View();
         }
         [HttpGet]
+        public ActionResult ShowScenery1()
+        {
+            string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowAllScenery");
+            return Content(result);
+        }
+        public ActionResult ShowRegion(int Id)
+        {
+            string result = HttpClientHelper.Send("get", "api/UserInfoApi/ShowRegion?Id=" + Id);
+            return Content(result);
+        }
+        [HttpGet]
+        public ActionResult ShowSceneryType()
+        {
+            string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowSceneryType");
+            return Content(result);
+        }
+        [HttpGet]
+        public ActionResult ShowHoliday1()
+        {
+            string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowHoliday"); 
+            return Content(result);
+        }
+        [HttpGet]
+        public ActionResult ShowParticipation1()
+        {
+            string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowAllParticipation"); 
+            return Content(result);
+        }
+        [HttpGet]
         public ActionResult AddHoliday()
         {
             return View();

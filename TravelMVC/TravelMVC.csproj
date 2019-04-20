@@ -668,6 +668,8 @@
     <Content Include="layui\lay\modules\tree.js" />
     <Content Include="layui\lay\modules\upload.js" />
     <Content Include="layui\lay\modules\util.js" />
+    <Content Include="MD5\MD5.js" />
+    <Content Include="MD5\tool.js" />
     <Content Include="obj\Debug\TravelMVC.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\TravelMVC.dll" />
     <Content Include="obj\Debug\TravelMVC.pdb" />

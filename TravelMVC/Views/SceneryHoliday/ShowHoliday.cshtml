@@ -8,6 +8,8 @@
 <script src="~/Scripts/vue.js"></script>
 <script src="~/Scripts/ElementUI/element-ui.js"></script>
 <script src="~/axios-master/dist/axios.js"></script>
+<script src="~/MD5/tool.js"></script>
+<script src="~/MD5/MD5.js"></script>
 <div id='app'>
     <template>
         <el-table :data="tableData"
@@ -89,7 +91,7 @@
             },
             created: function () {
                 var self = this;
-                axios.get('http://localhost:61521/api/SceneryHolidayApi/ShowHoliday').then(function (res) {
+                axios.get('/SceneryHoliday/ShowHoliday1').then(function (res) {
                     console.log(res.data);
                     self.tableData = res.data;
                 }).catch(function (err) {
@@ -98,7 +100,7 @@
                 //显而易见 这里应该发送ajax初始化数据的 axios.get
             },
             methods: {
-                show: function (Id) { 
+                show: function (Id) {
                     console.log(this.tableData[Id].H_Explain)
                     this.beforeDate = this.tableData[Id].H_Explain
                     this.dialogVisible = true
@@ -110,7 +112,7 @@
                         })
                         .catch(_ => { });
                 }
-            
+
             }
         })
     }
