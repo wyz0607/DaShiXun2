@@ -76,7 +76,8 @@
 
     function dian(obj) {
         $.ajax({
-            url: "http://localhost:61521/api/UserInfoApi/GetOneUser?id=" + obj.id,
+            url: "/Order/GetOneUser?id=" + obj.id,
+            dataType:"json",
             success: function (data) {
                 var UserName = data.UserName;
                 var UserPhone = data.UserPhone;
