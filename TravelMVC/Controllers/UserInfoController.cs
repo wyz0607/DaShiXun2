@@ -21,7 +21,6 @@ namespace TravelMVC.Controllers
             cookie.Expires = DateTime.Now.AddMinutes(20);
             cookie["Code"] = str;
             Response.Cookies.Add(cookie);
-
             return View();
         }
         [HttpPost]
