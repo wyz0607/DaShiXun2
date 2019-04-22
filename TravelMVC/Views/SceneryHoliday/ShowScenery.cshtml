@@ -164,8 +164,13 @@
             },
             created: function () {
                 var self = this;
-                axios.get('http://localhost:61521/api/SceneryHolidayApi/ShowAllScenery').then(function (res) {
+                axios.get('/SceneryHoliday/ShowScenery1').then(function (res) {
                     console.log(res.data);
+                    for (var i in res.data) {
+                        if (res.data[i].S_Introduction.length>36) {
+                            res.data[i].S_Introduction=res.data[i].S_Introduction.substring(0, 36) + "...";
+                        }
+                    }
                     self.tableData = res.data;
                 }).catch(function (err) {
                     console.log(err.data)
@@ -186,7 +191,7 @@
                     this.updData.S_Genus_City = '';
                     this.updData.S_Genus_Coun = '';
                     var self = this;
-                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + n).then(function (res) {
+                    axios.get("/SceneryHoliday/ShowRegion?Id=" + n).then(function (res) {
                         self.City = res.data;
                         console.log(self.City);
                     }).catch(function (err) {
@@ -197,7 +202,7 @@
                 DuoJi1(n) {
                     this.updData.S_Genus_Coun = '';
                     var self = this;
-                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + n).then(function (res) {
+                    axios.get("/SceneryHoliday/ShowRegion?Id=" + n).then(function (res) {
                         self.Coun = res.data;
                         console.log(self.Coun);
                     }).catch(function (err) {
@@ -250,28 +255,28 @@
                     this.beforeDate = JSON.stringify(data);//存储原始数据 若点击取消 需要还原时使用
                     //数据反填到修改表单
                     this.updData = data;
-                    axios.get("http://localhost:61521/api/SceneryHolidayApi/ShowSceneryType").then(function (res) {
+                    axios.get("/SceneryHoliday/ShowSceneryType").then(function (res) {
                         self.Type = res.data;
                         console.log(self.Type);
                     }).catch(function (err) {
                         console.log(err);
                         console.log(err.data)
                     })
-                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion").then(function (res) {
+                    axios.get("/SceneryHoliday/ShowRegion?Id=0").then(function (res) {
                         self.Prov = res.data;
                         console.log(self.Prov);
                     }).catch(function (err) {
                         console.log(err);
                         console.log(err.data)
                         })
-                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + self.updData.S_Genus_Prov).then(function (res) {
+                    axios.get("/SceneryHoliday/ShowRegion?Id=" + self.updData.S_Genus_Prov).then(function (res) {
                         self.City = res.data;
                         console.log(self.City);
                     }).catch(function (err) {
                         console.log(err);
                         console.log(err.data)
                         })
-                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + self.updData.S_Genus_City).then(function (res) {
+                    axios.get("/SceneryHoliday/ShowRegion?Id=" + self.updData.S_Genus_City).then(function (res) {
                         self.Coun = res.data;
                         console.log(self.Coun);
                     }).catch(function (err) {

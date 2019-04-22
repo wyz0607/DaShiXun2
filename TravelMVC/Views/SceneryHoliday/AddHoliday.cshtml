@@ -8,13 +8,15 @@
 <script src="~/Scripts/vue.js"></script>
 <script src="~/Scripts/ElementUI/element-ui.js"></script>
 <script src="~/axios-master/dist/axios.js"></script>
+<script src="~/MD5/MD5.js"></script>
+<script src="~/MD5/tool.js"></script>
 <div id='app'>
     @*<span>度假村照片</span>
-    <input type="hidden" id="hImg" value="" />
-    <div class="layui-upload-drag" name="file" style="margin-left:25px;margin-bottom:30px" id="test10">
-                <i class="layui-icon" name="file"></i>
-                <p name="file">点击上传，或将文件拖拽到此处</p>
-        </div>*@
+        <input type="hidden" id="hImg" value="" />
+        <div class="layui-upload-drag" name="file" style="margin-left:25px;margin-bottom:30px" id="test10">
+                    <i class="layui-icon" name="file"></i>
+                    <p name="file">点击上传，或将文件拖拽到此处</p>
+            </div>*@
     <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="度假主题">
             <el-input v-model="form.H_Theme"></el-input>
@@ -56,6 +58,26 @@
         <el-form-item label="行程说明">
             <el-input v-model="form.H_Explain"></el-input>
         </el-form-item>
+        <el-form-item label="出行人数">
+            <el-input v-model="form.H_Num"></el-input>
+        </el-form-item>
+        <el-form-item label="行程路线">
+            <el-input v-model="form.H_Route"></el-input>
+        </el-form-item>
+        <el-form-item label="出行地点">
+            <el-input v-model="form.H_ProFeature"></el-input>
+        </el-form-item>
+        <el-form-item label="行程类型">
+            <el-radio-group v-model="form.H_Pickpoint">
+                <el-radio label="A"></el-radio>
+                <el-radio label="B"></el-radio>
+                <el-radio label="C"></el-radio>
+                <el-radio label="D"></el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <el-form-item label="行程类型名称">
+            <el-input v-model="form.H_RouteCircuit"></el-input>
+        </el-form-item>
         <el-form-item label="度假图片">
             <el-upload class="upload-demo"
                        drag
@@ -64,7 +86,7 @@
                        name="file"
                        multiple>
                 <i class="el-icon-upload"></i>
-                <div class="el-upload__text" >将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
             </el-upload>
         </el-form-item>
@@ -110,13 +132,18 @@
                     H_Theme: '',
                     H_Destination: '',
                     H_RetailPrice: 0,
-                    H_FormerPrice: 0,                  
+                    H_FormerPrice: 0,
                     H_Data: '',
                     H_Traffic: '',
                     H_TravelDays: '',
                     H_Participant: '',
                     H_Explain: '',
-                    H_Photo:''
+                    H_Photo: '',
+                    H_Num: 0,
+                    H_Route: '',
+                    H_Pickpoint: '',
+                    H_RouteCircuit: '',
+                    H_RouteName:'',
                 }
             },
             methods: {
@@ -125,10 +152,10 @@
                     this.form.H_Photo = file.response;
                 },
                 onSubmit() {
-                    this.form.H_Data= format(this.form.H_Data, 'yyyy-MM-dd');
+                    this.form.H_RouteName = this.form.H_Explain
+                    this.form.H_Data = format(this.form.H_Data, 'yyyy-MM-dd');
                     console.log(JSON.stringify(this.form));
                     var self = this;
-                    
                     axios.post("/SceneryHoliday/AddHoliday", this.form).then(function (res) {
                         self.form = {};
                         console.log(res.data);
@@ -151,5 +178,5 @@
             }
         });
     }
-   
+
 </script>

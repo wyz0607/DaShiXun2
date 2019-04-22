@@ -16,7 +16,8 @@ namespace TravelMVC.Models
         public string N_DateTime { get; set; }
         public string N_Name { get; set; }
         public string  N_Photo { get; set; }
-
+        public int N_Num { get; set; }//点赞数
+        public bool Is_Love { get; set; }
 
     }
 }

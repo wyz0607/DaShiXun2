@@ -129,7 +129,7 @@
                     this.form.S_Genus_City = '';
                     this.form.S_Genus_Coun = '';
                     var self = this;
-                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + n).then(function (res) {
+                    axios.get("/SceneryHoliday/ShowRegion?Id=" + n).then(function (res) {
                         self.City = res.data;
                         console.log(self.City);
                     }).catch(function (err) {
@@ -140,7 +140,7 @@
                 DuoJi1(n) {
                     this.form.S_Genus_Coun = '';
                     var self = this;
-                    axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion?Id=" + n).then(function (res) {
+                    axios.get("/SceneryHoliday/ShowRegion?Id=" + n).then(function (res) {
                         self.Coun = res.data;
                         console.log(self.Coun);
                     }).catch(function (err) {
@@ -151,14 +151,14 @@
             },
             created: function () {
                 var self = this;
-                axios.get("http://localhost:61521/api/SceneryHolidayApi/ShowSceneryType").then(function (res) {
+                axios.get("/SceneryHoliday/ShowSceneryType").then(function (res) {
                     self.Type = res.data;
                     console.log(self.Type);
                 }).catch(function (err) {
                     console.log(err);
                     console.log(err.data)
                     })
-                axios.get("http://localhost:61521/api/UserInfoApi/ShowRegion").then(function (res) {
+                axios.get("/SceneryHoliday/ShowRegion?Id=0").then(function (res) {
                     self.Prov = res.data;
                     console.log(self.Prov);
                 }).catch(function (err) {
