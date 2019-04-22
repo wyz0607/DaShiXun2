@@ -14,40 +14,49 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            //访问api得到 验证的数据
             string str = HttpClientHelper.Send("get", "api/Values/get",null);
+            //得到后写入 cookie中,有效期为20分钟
             HttpCookie cookie = new HttpCookie("MyCookie");
             cookie.Expires = DateTime.Now.AddMinutes(20);
             cookie["Code"] = str;
             Response.Cookies.Add(cookie);
-
             return View();
         }
         [HttpPost]
-        public void Login(string UserName = "", string UserPwd = "")
+        public void Login(User users)
         {
-            if (UserName == "")
+            if (users.UserName == "")
             {
                 Response.Write("<script>alert('用户名不可为空,请重新登录');location.href='/UserInfo/Login';</script>");
             }
-            else if (UserPwd == "")
+            else if (users.UserPwd == "")
             {
                 Response.Write("<script>alert('密码不可为空,请重新登录');location.href='/UserInfo/Login';</script>");
             }
             else
             {
                 string jsonResult;
-                //Dictionary<string, string> data = new Dictionary<string, string>();
-                //data.Add("UserName", UserName);
-                //data.Add("UserPwd", UserPwd);
+                //需要到服务器的值 存入字典对象中,
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                data.Add("UserName", users.UserName);
+                data.Add("UserPwd", users.UserPwd);
 
                 string code = "";
+                //从cookie中获取验证
                 var ck = Request.Cookies.Get("MyCookie");
                 if (ck != null)
                 {
                     code = ck.Values["Code"];
                 }
 
-                jsonResult = HttpClientHelper.Send("get", $"api/Values/GetLoginUser?UserName={UserName}&UserPwd={UserPwd}");
+                string str = JsonConvert.SerializeObject(users);
+
+                //传入方法中  singTrue=code+ staffId + data; staffId是只有服务器和客户端知道的私钥
+                string singtrue = DataTransfer.GetMD5Staff(data,code);
+
+                //访问服务器 将数据添加到请求头中(转动定义)
+                jsonResult = HttpApiSecretHelper.Send("post", "api/UserInfoApi/GetLoginUser", str,singtrue,code);
                 UserInfo user = JsonConvert.DeserializeObject<UserInfo>(jsonResult);
 
 
@@ -62,6 +71,12 @@ namespace TravelMVC.Controllers
                     Response.Write("<script>location.href='/UserInfo/ShowAdmin';</script>");
                 }
             }
+        }
+
+        public class User
+        {
+            public string UserPwd { get; set; }
+            public string UserName { get; set; }
         }
         #endregion
         #region 添加管理员
