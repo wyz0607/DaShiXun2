@@ -22,13 +22,13 @@ namespace TravelMVC.Controllers
             return View();
         }
         [HttpPost]
-        public void Login(string UserName = "", string UserPwd = "")
+        public void Login(User users)
         {
-            if (UserName == "")
+            if (users.UserName == "")
             {
                 Response.Write("<script>alert('用户名不可为空,请重新登录');location.href='/UserInfo/Login';</script>");
             }
-            else if (UserPwd == "")
+            else if (users.UserPwd == "")
             {
                 Response.Write("<script>alert('密码不可为空,请重新登录');location.href='/UserInfo/Login';</script>");
             }
@@ -36,8 +36,8 @@ namespace TravelMVC.Controllers
             {
                 string jsonResult;
                 Dictionary<string, string> data = new Dictionary<string, string>();
-                data.Add("UserName", UserName);
-                data.Add("UserPwd", UserPwd);
+                data.Add("UserName", users.UserName);
+                data.Add("UserPwd", users.UserPwd);
 
                 string code = "";
                 var ck = Request.Cookies.Get("MyCookie");
@@ -45,7 +45,11 @@ namespace TravelMVC.Controllers
                 {
                     code = ck.Values["Code"];
                 }
-                jsonResult = HttpClientHelper.Send("get", $"api/Values/GetLoginUser?UserName={UserName}&UserPwd={UserPwd}");
+
+                string str = JsonConvert.SerializeObject(users);
+                string singtrue= DataTransfer.GetMD5Staff(data,code);
+
+                jsonResult = HttpApiSecretHelper.Send("post", "api/UserInfoApi/GetLoginUser", str,singtrue,code);
                 UserInfo user = JsonConvert.DeserializeObject<UserInfo>(jsonResult);
 
 
@@ -60,6 +64,12 @@ namespace TravelMVC.Controllers
                     Response.Write("<script>location.href='/UserInfo/ShowAdmin';</script>");
                 }
             }
+        }
+
+        public class User
+        {
+            public string UserPwd { get; set; }
+            public string UserName { get; set; }
         }
         #endregion
         #region 添加管理员
