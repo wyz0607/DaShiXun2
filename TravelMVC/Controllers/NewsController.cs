@@ -149,22 +149,30 @@ namespace TravelMVC.Controllers
         public ActionResult AddNews()
         {
             var code = "";
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
-            }
+            }
+
+
             var singTrue = DataTransfer.GetMD5Staff(keys, code);
             string result = HttpApiSecretHelper.Send("get", "api/NewsApi/ShowNewTypes", "", singTrue, code);
             var ntype = JsonConvert.DeserializeObject<List<Newstype>>(result);
             SelectList slist = new SelectList(ntype, "T_Id", "N_Name");
-            ViewBag.slist = slist;
+            ViewBag.slist = slist;
+
+
             return View();
         }
         [HttpPost]
         public ActionResult AddNews(NewsList sce, HttpPostedFileBase img)
-        {
+        {
+
+
             //判断是否有图片上传
             if (img != null)
             {
@@ -175,12 +183,16 @@ namespace TravelMVC.Controllers
                 sce.N_Photo = "http://localhost:54970/Images/" + fileName;
             }
             var code = "";
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
-            }
+            }
+
+
             var singTrue = DataTransfer.GetMD5Staff(keys, code);
             string strJson = JsonConvert.SerializeObject(sce);
             string result = HttpApiSecretHelper.Send("post", "api/NewsApi/AddNews", strJson, singTrue, code);
@@ -190,8 +202,12 @@ namespace TravelMVC.Controllers
             }
             else
             {
-                return Content("<script>alert('" + result + "')</script>");
-            }
+                return Content("<script>alert('" + result + "')</script>");
+
+
+            }
+
+
         }
 
 
@@ -203,12 +219,16 @@ namespace TravelMVC.Controllers
         public ActionResult ShowNews(int pageindex = 1)
         {
             var code = "";
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
-            }
+            }
+
+
             var singTrue = DataTransfer.GetMD5Staff(keys, code);
             string result = HttpApiSecretHelper.Send("get", "api/NewsApi/ShowNews", "", singTrue, code);
             List<NewsList> sce = JsonConvert.DeserializeObject<List<NewsList>>(result);
@@ -218,7 +238,9 @@ namespace TravelMVC.Controllers
                 {
                     item.N_Content = item.N_Content.Substring(0, 49) + "...";
                 }
-            }
+            }
+
+
             sList = sce;
             ViewBag.currentindex = pageindex;
             ViewBag.totaldata = sce.Count;
@@ -233,33 +255,45 @@ namespace TravelMVC.Controllers
         {
             ViewBag.pIndex = pageIndex;
             var code = "";
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
-            }
+            }
+
+
             var singTrue = DataTransfer.GetMD5Staff(keys, code);
             string json = HttpApiSecretHelper.Send("get", "api/NewsApi/ShowNews", "", singTrue, code);
             List<NewsList> menu = JsonConvert.DeserializeObject<List<NewsList>>(json);
             string json1 = JsonConvert.SerializeObject(menu.Skip((pageIndex - 1) * pageSize).Take(pageSize));
             return Content(json1);
-        }
+        }
+
+
         //删除新闻
         public ActionResult DelNews(int id)
         {
             var code = "";
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
-            }
+            }
+
+
             var singTrue = DataTransfer.GetMD5Staff(keys, code);
             string result = HttpApiSecretHelper.Send("delete", "api/NewsApi/DelNews?Id=" + id, singTrue, code);
             if (result.Contains("成功"))
             {
-                return Redirect("/News/ShowNews");
+                return Redirect("/News/ShowNews");
+
+
             }
             else
             {
@@ -271,12 +305,16 @@ namespace TravelMVC.Controllers
         public ActionResult UptNews(int id)
         {
             var code = "";
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
-            }
+            }
+
+
             var singTrue = DataTransfer.GetMD5Staff(keys, code);
             Session["id"] = id;
             string result = HttpApiSecretHelper.Send("get", "api/NewsApi/ShowNewTypes", "", singTrue, code);
@@ -290,23 +328,31 @@ namespace TravelMVC.Controllers
         }
         [HttpPost]
         public ActionResult UptNews(NewsList kit, HttpPostedFileBase img)
-        {
+        {
+
+
             if (img != null)//需要更换图片时
             {
                 string path = Server.MapPath("/Images/");
                 string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + img.FileName;
                 img.SaveAs(path + filename);
                 kit.N_Photo = "http://localhost:54970/Images/" + filename;
-            }
+            }
+
+
             kit.N_Id = Convert.ToInt32(Session["id"]);
             string jsonstr = JsonConvert.SerializeObject(kit);
             var code = "";
-            Dictionary<string, string> keys = new Dictionary<string, string>();
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
-            }
+            }
+
+
             var singTrue = DataTransfer.GetMD5Staff(keys, code);
             string str = HttpApiSecretHelper.Send("put", "api/NewsApi/UptNews", jsonstr, singTrue, code);
             if (str.Contains("成功"))
