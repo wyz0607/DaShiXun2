@@ -36,9 +36,9 @@ namespace TravelMVC.Controllers
             else
             {
                 string jsonResult;
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                data.Add("UserName", UserName);
-                data.Add("UserPwd", UserPwd);
+                //Dictionary<string, string> data = new Dictionary<string, string>();
+                //data.Add("UserName", UserName);
+                //data.Add("UserPwd", UserPwd);
 
                 string code = "";
                 var ck = Request.Cookies.Get("MyCookie");

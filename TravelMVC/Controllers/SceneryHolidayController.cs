@@ -48,6 +48,12 @@ namespace TravelMVC.Controllers
         [HttpPost]
         public ActionResult AddScenery(Scenery scenery)
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string json = JsonConvert.SerializeObject(scenery);
             string result=HttpClientHelper.Send("post", "api/SceneryHolidayApi/AddScenery", json);
             if (result.Contains("成功"))
@@ -67,29 +73,59 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult ShowScenery1()
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowAllScenery");
             return Content(result);
         }
         public ActionResult ShowRegion(int Id)
         {
+            //string code = "";
+            //var ck = Request.Cookies.Get("MyCookie");
+            //if (ck != null)
+            //{
+            //    code = ck.Values["Code"];
+            //}
             string result = HttpClientHelper.Send("get", "api/UserInfoApi/ShowRegion?Id=" + Id);
             return Content(result);
         }
         [HttpGet]
         public ActionResult ShowSceneryType()
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowSceneryType");
             return Content(result);
         }
         [HttpGet]
         public ActionResult ShowHoliday1()
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowHoliday"); 
             return Content(result);
         }
         [HttpGet]
         public ActionResult ShowParticipation1()
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowAllParticipation"); 
             return Content(result);
         }
@@ -101,6 +137,12 @@ namespace TravelMVC.Controllers
         [HttpPost]
         public ActionResult AddHoliday(Holiday holiday)
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string json = JsonConvert.SerializeObject(holiday);
             string result = HttpClientHelper.Send("post", "api/SceneryHolidayApi/AddHoliday", json);
             if (result.Contains("成功"))
@@ -115,6 +157,12 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult DelScenery(int S_Id)
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string result = HttpClientHelper.Send("delete", "api/SceneryHolidayApi/DelScenery?S_Id=" + S_Id, null);
             if (result.Contains("成功"))
             {
@@ -128,6 +176,12 @@ namespace TravelMVC.Controllers
         [HttpPost]
         public ActionResult UptScenery(Scenery scenery)
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string result = HttpClientHelper.Send("put", "api/SceneryHolidayApi/UptScenery", JsonConvert.SerializeObject(scenery));
             if (result.Contains("成功"))
             {
@@ -151,6 +205,12 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult DelParticipation(int P_Id)
         {
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
             string result = HttpClientHelper.Send("delete", "api/SceneryHolidayApi/DelParticipation?P_Id=" + P_Id, null);
             if (result.Contains("成功"))
             {
