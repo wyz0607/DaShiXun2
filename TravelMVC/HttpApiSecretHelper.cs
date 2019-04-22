@@ -15,7 +15,7 @@ namespace TravelMVC
             HttpClient client = new HttpClient();
             client.BaseAddress = uri;
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //将时间戳,随机数,令牌 添加到请求头中
+            //将验证,singTure添加到请求头中
             client.DefaultRequestHeaders.Add("code", code);
             client.DefaultRequestHeaders.Add("singtrue", singTrue);
 
