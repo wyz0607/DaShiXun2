@@ -19,7 +19,6 @@ namespace TravelMVC.Controllers
             cookie.Expires = DateTime.Now.AddMinutes(20);
             cookie["Code"] = str;
             Response.Cookies.Add(cookie);
-
             return View();
         }
         [HttpPost]
@@ -46,7 +45,6 @@ namespace TravelMVC.Controllers
                 {
                     code = ck.Values["Code"];
                 }
-
                 jsonResult = HttpClientHelper.Send("get", $"api/Values/GetLoginUser?UserName={UserName}&UserPwd={UserPwd}");
                 UserInfo user = JsonConvert.DeserializeObject<UserInfo>(jsonResult);
 
