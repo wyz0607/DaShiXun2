@@ -14,6 +14,12 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            string str = HttpClientHelper.Send("get", "api/Values/get",null);
+            HttpCookie cookie = new HttpCookie("MyCookie");
+            cookie.Expires = DateTime.Now.AddMinutes(20);
+            cookie["Code"] = str;
+            Response.Cookies.Add(cookie);
+
             return View();
         }
         [HttpPost]
@@ -29,9 +35,24 @@ namespace TravelMVC.Controllers
             }
             else
             {
-                string jsonResult = HttpClientHelper.Send("get", $"api/UserInfoApi/GetLoginUser?UserName={UserName}&UserPwd={UserPwd}");
+                string jsonResult;
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                data.Add("UserName", UserName);
+                data.Add("UserPwd", UserPwd);
+
+                string code = "";
+                var ck = Request.Cookies.Get("MyCookie");
+                if (ck != null)
+                {
+                    code = ck.Values["Code"];
+                }
+
+                jsonResult = HttpClientHelper.Send("get", $"api/Values/GetLoginUser?UserName={UserName}&UserPwd={UserPwd}");
                 UserInfo user = JsonConvert.DeserializeObject<UserInfo>(jsonResult);
-                if (user == null || user.User_Role!="管理员")
+
+
+
+                if (user == null || user.User_Role != "管理员")
                 {
                     Response.Write("<script>alert('用户名或密码有误,请重新登录');location.href='/UserInfo/Login';</script>");
                 }
@@ -87,7 +108,17 @@ namespace TravelMVC.Controllers
         //获取所有用户方法
         public string GetAllUser(string Role_Name, string UserPhone = "", string UserName = "")
         {
-            string jsonResult = HttpClientHelper.Send("get", "api/UserInfoApi/ShowUser");
+            var code = "";
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                 code = ck.Values["Code"];
+            }
+
+            var singTrue= DataTransfer.GetMD5Staff(keys,code);
+            string jsonResult = HttpApiSecretHelper.Send("get", "api/UserInfoApi/ShowUser","",singTrue,code);
             List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(jsonResult);
             List<UserInfo> ListAdmin = new List<UserInfo>();
             List<UserInfo> ListCommon = new List<UserInfo>();
@@ -122,7 +153,8 @@ namespace TravelMVC.Controllers
         //显示管理员页面
         public ActionResult ShowAdmin()
         {
-             return View();
+
+            return View();
         }
         //显示用户页面
         public ActionResult ShowCommon()
@@ -148,7 +180,7 @@ namespace TravelMVC.Controllers
         #region 个人资料
         public ActionResult MyPage()
         {
-            UserInfo user= Session["User"] as UserInfo;
+            UserInfo user = Session["User"] as UserInfo;
             return View(user);
         }
         #endregion
@@ -191,7 +223,9 @@ namespace TravelMVC.Controllers
         #region 列表某人的详情显示
         public ActionResult ShowSomeOne(int Id)
         {
-            string jsonResult = HttpClientHelper.Send("get", "api/UserInfoApi/ShowUser");
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+            keys.Add("Id", Id.ToString());
+            string jsonResult = HttpClientHelper.Send("get", "api/UserInfoApi/ShowUser", "");
             List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(jsonResult);
             UserInfo user = list.Where(s => s.UserID == Id).FirstOrDefault();
             return View(user);

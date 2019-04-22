@@ -13,9 +13,22 @@ namespace TravelMVC.Controllers
         // GET: Order
         public ActionResult Index()
         {
-            var result = HttpClientHelper.Send("get", "api/OrderApi/ShowOrder",null);
-            var list = JsonConvert.DeserializeObject<List<Order>>(result);
-            return View(list);
+            //Dictionary<string,string> dic= null;
+            //string none = DataTransfer.GetNonce().ToString();
+            //string timeaTamp= DataTransfer.GetTimeStamp();
+
+
+            var result = HttpClientHelper.Send("get", "api/OrderApi/ShowOrder","");
+            if (!result.Contains("错误"))
+            {
+                var list = JsonConvert.DeserializeObject<List<Order>>(result);
+                return View(list);
+            }
+            else
+            {
+                return View(result);
+            }
+            
         }
     }
 }

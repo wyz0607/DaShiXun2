@@ -19,6 +19,7 @@ namespace TravelMVC.Models
         public string User_DocumentType { get; set; }//证件类型
         public string User_IDNumber { get; set; }//证件号
         public string User_Role { get; set; }//角色
+        public string Code { get; set; }
 
 
         //外键用到字段

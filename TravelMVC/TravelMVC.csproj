@@ -155,9 +155,11 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\SceneryHolidayController.cs" />
     <Compile Include="Controllers\UserInfoController.cs" />
+    <Compile Include="DataTransfer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HttpApiSecretHelper.cs" />
     <Compile Include="HttpClientHelper.cs" />
     <Compile Include="Models\Airticket.cs" />
     <Compile Include="Models\Comment.cs" />
