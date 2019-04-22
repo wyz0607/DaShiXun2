@@ -14,12 +14,13 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            //访问api得到 验证的数据
             string str = HttpClientHelper.Send("get", "api/Values/get",null);
+            //得到后写入 cookie中,有效期为20分钟
             HttpCookie cookie = new HttpCookie("MyCookie");
             cookie.Expires = DateTime.Now.AddMinutes(20);
             cookie["Code"] = str;
             Response.Cookies.Add(cookie);
-
             return View();
         }
         [HttpPost]
@@ -36,11 +37,13 @@ namespace TravelMVC.Controllers
             else
             {
                 string jsonResult;
+                //需要到服务器的值 存入字典对象中,
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 data.Add("UserName", users.UserName);
                 data.Add("UserPwd", users.UserPwd);
 
                 string code = "";
+                //从cookie中获取验证
                 var ck = Request.Cookies.Get("MyCookie");
                 if (ck != null)
                 {
@@ -48,8 +51,11 @@ namespace TravelMVC.Controllers
                 }
 
                 string str = JsonConvert.SerializeObject(users);
-                string singtrue= DataTransfer.GetMD5Staff(data,code);
 
+                //传入方法中  singTrue=code+ staffId + data; staffId是只有服务器和客户端知道的私钥
+                string singtrue = DataTransfer.GetMD5Staff(data,code);
+
+                //访问服务器 将数据添加到请求头中(转动定义)
                 jsonResult = HttpApiSecretHelper.Send("post", "api/UserInfoApi/GetLoginUser", str,singtrue,code);
                 UserInfo user = JsonConvert.DeserializeObject<UserInfo>(jsonResult);
 
