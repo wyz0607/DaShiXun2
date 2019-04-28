@@ -54,8 +54,15 @@ namespace TravelMVC.Controllers
             {
                 code = ck.Values["Code"];
             }
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            foreach (var item in typeof(Scenery).GetProperties())
+            {
+                data.Add(item.Name, item.GetValue(scenery).ToString());
+            }
+            //singTrue = code + staffId + data; staffId是只有服务器和客户端知道的私钥
+            string singtrue = DataTransfer.GetMD5Staff(data, code);
             string json = JsonConvert.SerializeObject(scenery);
-            string result=HttpClientHelper.Send("post", "api/SceneryHolidayApi/AddScenery", json);
+            string result = HttpApiSecretHelper.Send("post", "api/SceneryHolidayApi/AddScenery", json, singtrue, code);
             if (result.Contains("成功"))
             {
                 return Content("添加成功");
@@ -73,48 +80,61 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult ShowScenery1()
         {
-            string code = "";
+            var code = "";
+            Dictionary<string, string> keys = new Dictionary<string, string>();
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
             }
-            string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowAllScenery");
+
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+            string result = HttpApiSecretHelper.Send("get", "api/SceneryHolidayApi/ShowAllScenery","",singTrue,code);
             return Content(result);
         }
         public ActionResult ShowRegion(int Id)
         {
-            //string code = "";
-            //var ck = Request.Cookies.Get("MyCookie");
-            //if (ck != null)
-            //{
-            //    code = ck.Values["Code"];
-            //}
-            string result = HttpClientHelper.Send("get", "api/UserInfoApi/ShowRegion?Id=" + Id);
+            var code = "";
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+            keys.Add("Id", Id.ToString());
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
+
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+            string result = HttpApiSecretHelper.Send("get", "api/UserInfoApi/ShowRegion?Id=" + Id,JsonConvert.SerializeObject(Id),singTrue,code);
             return Content(result);
         }
         [HttpGet]
         public ActionResult ShowSceneryType()
         {
-            string code = "";
+            var code = "";
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
             }
-            string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowSceneryType");
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+            string result = HttpApiSecretHelper.Send("get", "api/SceneryHolidayApi/ShowSceneryType", "", singTrue, code);
             return Content(result);
         }
         [HttpGet]
         public ActionResult ShowHoliday1()
         {
-            string code = "";
+            var code = "";
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
             }
-            string result = HttpClientHelper.Send("get", "api/SceneryHolidayApi/ShowHoliday"); 
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+            string result = HttpApiSecretHelper.Send("get", "api/SceneryHolidayApi/ShowHoliday", "", singTrue, code);
             return Content(result);
         }
         [HttpGet]
@@ -143,8 +163,15 @@ namespace TravelMVC.Controllers
             {
                 code = ck.Values["Code"];
             }
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            foreach (var item in typeof(Holiday).GetProperties())
+            {
+                data.Add(item.Name, item.GetValue(holiday).ToString());
+            }
+            //singTrue = code + staffId + data; staffId是只有服务器和客户端知道的私钥
+            string singtrue = DataTransfer.GetMD5Staff(data, code);
             string json = JsonConvert.SerializeObject(holiday);
-            string result = HttpClientHelper.Send("post", "api/SceneryHolidayApi/AddHoliday", json);
+            string result = HttpApiSecretHelper.Send("post", "api/SceneryHolidayApi/AddHoliday", json, singtrue, code);
             if (result.Contains("成功"))
             {
                 return Content("添加成功");
@@ -157,13 +184,17 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult DelScenery(int S_Id)
         {
-            string code = "";
+            var code = "";
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+            keys.Add("S_Id", S_Id.ToString());
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
             }
-            string result = HttpClientHelper.Send("delete", "api/SceneryHolidayApi/DelScenery?S_Id=" + S_Id, null);
+
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+            string result = HttpApiSecretHelper.Send("delete", "api/SceneryHolidayApi/DelScenery?S_Id=" + S_Id, JsonConvert.SerializeObject(S_Id), singTrue, code);
             if (result.Contains("成功"))
             {
                 return Content("删除成功");
@@ -182,7 +213,15 @@ namespace TravelMVC.Controllers
             {
                 code = ck.Values["Code"];
             }
-            string result = HttpClientHelper.Send("put", "api/SceneryHolidayApi/UptScenery", JsonConvert.SerializeObject(scenery));
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            foreach (var item in typeof(Scenery).GetProperties())
+            {
+                data.Add(item.Name, item.GetValue(scenery).ToString());
+            }
+            //singTrue = code + staffId + data; staffId是只有服务器和客户端知道的私钥
+            string singtrue = DataTransfer.GetMD5Staff(data, code);
+            string json = JsonConvert.SerializeObject(scenery);
+            string result = HttpApiSecretHelper.Send("put", "api/SceneryHolidayApi/UptScenery", JsonConvert.SerializeObject(scenery),singtrue,code);
             if (result.Contains("成功"))
             {
                 return Content("修改成功");
@@ -205,13 +244,17 @@ namespace TravelMVC.Controllers
         [HttpGet]
         public ActionResult DelParticipation(int P_Id)
         {
-            string code = "";
+            var code = "";
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+            keys.Add("P_Id", P_Id.ToString());
             var ck = Request.Cookies.Get("MyCookie");
             if (ck != null)
             {
                 code = ck.Values["Code"];
             }
-            string result = HttpClientHelper.Send("delete", "api/SceneryHolidayApi/DelParticipation?P_Id=" + P_Id, null);
+
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+            string result = HttpApiSecretHelper.Send("delete", "api/SceneryHolidayApi/DelScenery?P_Id=" + P_Id, JsonConvert.SerializeObject(P_Id), singTrue, code);
             if (result.Contains("成功"))
             {
                 return Content("删除成功");

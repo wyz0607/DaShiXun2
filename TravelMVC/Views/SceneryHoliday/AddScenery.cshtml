@@ -120,6 +120,7 @@
                     var self = this;
                     axios.post("/SceneryHoliday/AddScenery", this.form).then(function (res) {
                         self.form = {};
+
                         console.log(res.data);
                     }).catch(function (err) {
                         console.log(err.data)
