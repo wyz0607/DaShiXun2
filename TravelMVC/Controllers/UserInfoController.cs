@@ -83,7 +83,19 @@ namespace TravelMVC.Controllers
         //绑定第一个下拉框方法
         public void BindSelect(int Id = 0)
         {
-            string jsonResult = HttpClientHelper.Send("get", $"api/UserInfoApi/ShowRegion/{Id}");
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("Id", Id.ToString());
+            string code = "";
+            //从cookie中获取验证
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
+
+            //传入方法中  singTrue=code+ staffId + data; staffId是只有服务器和客户端知道的私钥
+            string singtrue = DataTransfer.GetMD5Staff(dic, code);
+            string jsonResult = HttpApiSecretHelper.Send("get", $"api/UserInfoApi/ShowRegion?Id={Id}",JsonConvert.SerializeObject(Id),singtrue,code);
             List<Region> list = JsonConvert.DeserializeObject<List<Region>>(jsonResult);
             SelectList s = new SelectList(list, "R_Id", "R_Name");
             ViewBag.s = s;
@@ -91,7 +103,18 @@ namespace TravelMVC.Controllers
         //其它下拉框绑定数据电泳方法
         public string BindSelect2(int Id)
         {
-            string jsonResult = HttpClientHelper.Send("get", $"api/UserInfoApi/ShowRegion/{Id}");
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("Id", Id.ToString());
+            string code = "";
+            //从cookie中获取验证
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
+            //传入方法中  singTrue=code+ staffId + data; staffId是只有服务器和客户端知道的私钥
+            string singtrue = DataTransfer.GetMD5Staff(dic, code);
+            string jsonResult = HttpApiSecretHelper.Send("get", $"api/UserInfoApi/ShowRegion?Id={Id}",JsonConvert.SerializeObject(Id),singtrue,code);
             List<Region> list = JsonConvert.DeserializeObject<List<Region>>(jsonResult);
             return JsonConvert.SerializeObject(list);
         }
@@ -104,10 +127,37 @@ namespace TravelMVC.Controllers
         [HttpPost]
         public void AddUser(UserInfo user)
         {
-            BindSelect();
             user.User_Role = "管理员";
+            BindSelect();
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("UserID", user.UserID.ToString());
+            dic.Add("UserName", user.UserName);
+            dic.Add("UserPhone", user.UserPhone);
+            dic.Add("UserPwd", user.UserPwd);
+            dic.Add("UserSex", user.UserSex);
+            dic.Add("UserBirth", user.UserBirth.ToString());
+            dic.Add("User_Loc_Prov", user.User_Loc_Prov.ToString());
+            dic.Add("User_Loc_City", user.User_Loc_City.ToString());
+            dic.Add("User_Loc_Coun", user.User_Loc_Coun.ToString());
+            dic.Add("User_DocumentType", user.User_DocumentType);
+            dic.Add("User_IDNumber", user.User_IDNumber.ToString());
+            dic.Add("User_Role", user.User_Role);
+            dic.Add("Code", "");
+            dic.Add("RName", "");
+            dic.Add("CityName", "");
+            dic.Add("CounName", "");
+            string code = "";
+            //从cookie中获取验证
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
+
+            //传入方法中  singTrue=code+ staffId + data; staffId是只有服务器和客户端知道的私钥
+            string singtrue = DataTransfer.GetMD5Staff(dic, code);
             string json = JsonConvert.SerializeObject(user);
-            string jsonResult = HttpClientHelper.Send("post", "api/UserInfoApi/AddUser", json);
+            string jsonResult = HttpApiSecretHelper.Send("post", "api/UserInfoApi/AddUser", json,singtrue,code);
             int Result = JsonConvert.DeserializeObject<int>(jsonResult);
             if (Result > 0)
             {
@@ -133,7 +183,7 @@ namespace TravelMVC.Controllers
             }
 
             var singTrue= DataTransfer.GetMD5Staff(keys,code);
-            string jsonResult = HttpApiSecretHelper.Send("get", "api/UserInfoApi/ShowUser","",singTrue,code);
+            string jsonResult = HttpApiSecretHelper.Send("get", "api/UserInfoApi/ShowUser",null,singTrue,code);
             List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(jsonResult);
             List<UserInfo> ListAdmin = new List<UserInfo>();
             List<UserInfo> ListCommon = new List<UserInfo>();
@@ -181,7 +231,17 @@ namespace TravelMVC.Controllers
         //删除用户的信息
         public void DelUserInfo(int Id)
         {
-            string jsonResult = HttpClientHelper.Send("delete", $"api/UserInfoApi/DelUser/{Id}");
+            var code = "";
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
+
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+            string jsonResult = HttpApiSecretHelper.Send("delete", $"api/UserInfoApi/DelUser/{Id}",null,singTrue,code);
             if (JsonConvert.DeserializeObject<int>(jsonResult) > 0)
             {
                 Response.Write("<script>alert('删除成功');location.href='/UserInfo/ShowCommon';</script>");
@@ -209,8 +269,35 @@ namespace TravelMVC.Controllers
         {
             UserInfo user = Session["User"] as UserInfo;
             user.UserPwd = NewPwd;
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("UserID", user.UserID.ToString());
+            dic.Add("UserName", user.UserName);
+            dic.Add("UserPhone", user.UserPhone);
+            dic.Add("UserPwd", user.UserPwd);
+            dic.Add("UserSex", user.UserSex);
+            dic.Add("UserBirth", user.UserBirth.ToString());
+            dic.Add("User_Loc_Prov", user.User_Loc_Prov.ToString());
+            dic.Add("User_Loc_City", user.User_Loc_City.ToString());
+            dic.Add("User_Loc_Coun", user.User_Loc_Coun.ToString());
+            dic.Add("User_DocumentType", user.User_DocumentType);
+            dic.Add("User_IDNumber", user.User_IDNumber.ToString());
+            dic.Add("User_Role", user.User_Role.ToString());
+            dic.Add("Code",user.Code);
+            dic.Add("RName",user.RName);
+            dic.Add("CityName", user.CityName);
+            dic.Add("CounName", user.CounName);
+            string code = "";
+            //从cookie中获取验证
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
+
+            //传入方法中  singTrue=code+ staffId + data; staffId是只有服务器和客户端知道的私钥
+            string singtrue = DataTransfer.GetMD5Staff(dic, code);
             string json = JsonConvert.SerializeObject(user);
-            string jsonResult = HttpClientHelper.Send("put", $"api/UserInfoApi/UpdUser", json);
+            string jsonResult = HttpApiSecretHelper.Send("put", $"api/UserInfoApi/UpdUser", json,singtrue,code);
             int result = JsonConvert.DeserializeObject<int>(jsonResult);
             if (result > 0)
             {
@@ -239,8 +326,16 @@ namespace TravelMVC.Controllers
         public ActionResult ShowSomeOne(int Id)
         {
             Dictionary<string, string> keys = new Dictionary<string, string>();
-            keys.Add("Id", Id.ToString());
-            string jsonResult = HttpClientHelper.Send("get", "api/UserInfoApi/ShowUser", "");
+            string code = "";
+            //从cookie中获取验证
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
+            //传入方法中  singTrue=code+ staffId + data; staffId是只有服务器和客户端知道的私钥
+            string singtrue = DataTransfer.GetMD5Staff(keys, code);
+            string jsonResult = HttpApiSecretHelper.Send("get", "api/UserInfoApi/ShowUser",null,singtrue,code);
             List<UserInfo> list = JsonConvert.DeserializeObject<List<UserInfo>>(jsonResult);
             UserInfo user = list.Where(s => s.UserID == Id).FirstOrDefault();
             return View(user);

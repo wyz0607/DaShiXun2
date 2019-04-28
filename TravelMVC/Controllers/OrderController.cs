@@ -17,8 +17,17 @@ namespace TravelMVC.Controllers
             //string none = DataTransfer.GetNonce().ToString();
             //string timeaTamp= DataTransfer.GetTimeStamp();
 
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
 
-            var result = HttpClientHelper.Send("get", "api/OrderApi/ShowOrder","");
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+
+            var result = HttpApiSecretHelper.Send("get", "api/OrderApi/ShowOrder","",singTrue,code);
             if (!result.Contains("错误"))
             {
                 var list = JsonConvert.DeserializeObject<List<Order>>(result);
@@ -28,6 +37,23 @@ namespace TravelMVC.Controllers
             {
                 return View(result);
             }
+            
+        }
+
+
+        public string GetOneUser(int id)
+        {
+            Dictionary<string, string> keys = new Dictionary<string, string>();
+            keys.Add("id",id.ToString());
+            string code = "";
+            var ck = Request.Cookies.Get("MyCookie");
+            if (ck != null)
+            {
+                code = ck.Values["Code"];
+            }
+
+            var singTrue = DataTransfer.GetMD5Staff(keys, code);
+            return HttpApiSecretHelper.Send("get", "api/UserInfoApi/GetOneUser?id="+id, "", singTrue, code);
             
         }
     }
